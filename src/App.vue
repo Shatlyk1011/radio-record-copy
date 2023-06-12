@@ -1,7 +1,16 @@
 <template>
-  <div class="app">
+  <div class="app container">
+    <MainNav />
     <router-view />
   </div>
 </template>
 
-<style lang="scss"></style>
+<script setup>
+import MainNav from '@/components/MainNav.vue'
+</script>
+
+<style lang="scss">
+.app {
+  padding-top: 12rem;
+}
+</style>

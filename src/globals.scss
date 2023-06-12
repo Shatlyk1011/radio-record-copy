@@ -1,6 +1,8 @@
 $ff-roboto: 'Roboto', sans-serif;
 
 $color-bg: rgb(21, 20, 20);
+$color-bg-2: rgb(42, 42, 42);
+
 $color-main: rgb(252, 88, 31);
 $color-green: rgb(72, 205, 157);
 
@@ -8,7 +10,7 @@ $color-white: rgb(255, 255, 255);
 
 $color-text: rgb(235, 235, 235);
 
-$color-gray: rgb(168, 168, 168);
+$color-gray-1: rgb(168, 168, 168);
 $color-gray-2: rgb(122, 122, 122);
 $color-gray-3: rgb(91, 91, 91);
 
@@ -23,6 +25,7 @@ $color-gray-3: rgb(91, 91, 91);
 html {
   font-size: 62.5%;
   box-sizing: border-box;
+  font-family: $ff-roboto;
 }
 
 body {
@@ -48,6 +51,10 @@ ul {
 .container {
   max-width: 144rem;
   margin: 0 auto;
+}
+
+.color-green {
+  color: $color-green;
 }
 
 /* @mixin respond($breakpoint) {
