@@ -136,11 +136,7 @@
         </div>
 
         <div class="middle">
-          <ul class="lists">
-            <li class="active">Каналы</li>
-            <li>Плейлисты</li>
-            <li>События</li>
-          </ul>
+          <MenuThree />
 
           <div class="menu">
             <ul>
@@ -175,6 +171,8 @@
 </template>
 
 <script setup>
+import MenuThree from '@/components/shared/MenuThree.vue'
+
 import { OnClickOutside } from '@vueuse/components'
 
 import { ref } from 'vue'
@@ -326,26 +324,6 @@ header {
       flex-direction: column;
       gap: 3.2rem;
       margin: 14rem auto 0;
-
-      ul.lists {
-        display: flex;
-        gap: 4rem;
-        font-size: 5.6rem;
-        font-weight: 900;
-        color: $color-gray-2;
-        li {
-          transition: all 0.1s linear;
-
-          &.active {
-            color: $color-white;
-            cursor: text;
-          }
-
-          &:hover {
-            color: $color-text;
-          }
-        }
-      }
 
       .menu {
         display: flex;
