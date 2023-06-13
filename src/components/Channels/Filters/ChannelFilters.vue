@@ -5,15 +5,17 @@
       <img src="@/assets/icons/heart.svg" alt="heart icon" />
       <span>Избранные</span>
     </div>
-    <StyleFilter />
-    <ThemeFilter />
+    <StyleFilter :genres="genre" />
+    <ThemeFilter :tags="tags" />
   </div>
 </template>
 
 <script setup>
-import SortFilter from './Filters/SortFilter.vue'
-import StyleFilter from './Filters/StyleFilter.vue'
-import ThemeFilter from './Filters//ThemeFilter.vue'
+import SortFilter from '@/components/Channels/Filters/SortFilter.vue'
+import StyleFilter from '@/components/Channels/Filters/StyleFilter.vue'
+import ThemeFilter from '@/components/Channels/Filters//ThemeFilter.vue'
+
+import { tags, genre } from '@/db'
 </script>
 
 <style lang="scss">
@@ -44,6 +46,7 @@ import ThemeFilter from './Filters//ThemeFilter.vue'
   transition: all 0.1s linear;
   border-radius: 0.8rem;
   cursor: pointer;
+  z-index: 35;
 
   &:hover {
     background-color: $color-bg-3;

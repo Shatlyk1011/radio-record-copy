@@ -23,25 +23,9 @@
       <transition name="filter">
         <div class="theme-list" v-if="themeFilterBool">
           <ul>
-            <li>
-              <img src="@/assets/icons/check.svg" alt="check icon" />
-              <span>Christman</span>
-            </li>
-            <li>
-              <img src="@/assets/icons/check.svg" alt="check icon" />
-              <span>Summer</span>
-            </li>
-            <li>
-              <img src="@/assets/icons/check.svg" alt="check icon" />
-              <span>Sleep</span>
-            </li>
-            <li>
-              <img src="@/assets/icons/check.svg" alt="check icon" />
-              <span>Sport</span>
-            </li>
-            <li>
-              <img src="@/assets/icons/check.svg" alt="check icon" />
-              <span>Epoxa</span>
+            <li v-for="tag in tags" :key="tag.id">
+              <div v-html="tag.svg"></div>
+              <span>{{ tag.name }}</span>
             </li>
           </ul>
         </div>
@@ -53,6 +37,12 @@
 <script setup>
 import { ref } from 'vue'
 import { OnClickOutside } from '@vueuse/components'
+
+defineProps({
+  tags: {
+    required: true
+  }
+})
 
 const themeFilterBool = ref(false)
 </script>
@@ -91,6 +81,8 @@ const themeFilterBool = ref(false)
     border-radius: 0.8rem;
     width: 100%;
     box-sizing: border-box;
+    z-index: 35;
+
     ul {
       display: flex;
       flex-direction: column;

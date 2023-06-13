@@ -23,44 +23,8 @@
       <transition name="filter">
         <div class="style-list" v-if="styleFilterBool">
           <ul>
-            <li>
-              <span>bass</span>
-              <img src="@/assets/icons/check.svg" alt="check icon" />
-            </li>
-            <li>
-              <span>breaks</span>
-              <img src="@/assets/icons/check.svg" alt="check icon" />
-            </li>
-            <li>
-              <span>chill</span>
-              <img src="@/assets/icons/check.svg" alt="check icon" />
-            </li>
-            <li>
-              <span>drum</span>
-              <img src="@/assets/icons/check.svg" alt="check icon" />
-            </li>
-            <li>
-              <span>house</span>
-              <img src="@/assets/icons/check.svg" alt="check icon" />
-            </li>
-            <li>
-              <span>oldschool</span>
-              <img src="@/assets/icons/check.svg" alt="check icon" />
-            </li>
-            <li>
-              <span>russian</span>
-              <img src="@/assets/icons/check.svg" alt="check icon" />
-            </li>
-            <li>
-              <span>techno</span>
-              <img src="@/assets/icons/check.svg" alt="check icon" />
-            </li>
-            <li>
-              <span>trance</span>
-              <img src="@/assets/icons/check.svg" alt="check icon" />
-            </li>
-            <li>
-              <span>somethign</span>
+            <li v-for="genre in genres" :key="genre.id">
+              <span>{{ genre.name.toLowerCase() }}</span>
               <img src="@/assets/icons/check.svg" alt="check icon" />
             </li>
           </ul>
@@ -70,9 +34,17 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import { OnClickOutside } from '@vueuse/components'
+import { type IGenre } from '@/assets/types'
+
+defineProps({
+  genres: {
+    required: true,
+    type: Array<IGenre>
+  }
+})
 
 const styleFilterBool = ref(false)
 </script>
@@ -109,6 +81,7 @@ const styleFilterBool = ref(false)
     padding: 1.6rem;
     background-color: $color-bg-2;
     border-radius: 0.8rem;
+    z-index: 35;
     ul {
       columns: 2;
       text-transform: capitalize;
