@@ -2,6 +2,7 @@ $ff-roboto: 'Roboto', sans-serif;
 
 $color-bg: rgb(21, 20, 20);
 $color-bg-2: rgb(42, 42, 42);
+$color-bg-3: rgb(61, 61, 61);
 
 $color-main: rgb(252, 88, 31);
 $color-green: rgb(72, 205, 157);
@@ -65,6 +66,16 @@ ul {
   padding: 4rem 0;
 }
 
+.filter-enter-active,
+.filter-leave-active {
+  transition: all 0.2s linear;
+}
+
+.filter-enter-from,
+.filter-leave-to {
+  transform: translateY(-5rem);
+  opacity: 0;
+}
 /* @mixin respond($breakpoint) {
   @if $breakpoint == smallest {
     @media only screen and (max-width: 25em) {
