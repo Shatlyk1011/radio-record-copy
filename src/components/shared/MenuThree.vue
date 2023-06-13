@@ -1,8 +1,8 @@
 <template>
   <ul class="lists">
-    <li class="active">Каналы</li>
-    <li>Плейлисты</li>
-    <li>События</li>
+    <li class="active" tabindex="0">Каналы</li>
+    <li tabindex="0">Плейлисты</li>
+    <li tabindex="0">События</li>
   </ul>
 </template>
 
@@ -18,7 +18,9 @@ ul.lists {
     cursor: pointer;
     transition: all 0.1s linear;
 
-    &.active {
+    &.active,
+    &:focus {
+      outline: none;
       color: $color-white;
       cursor: text;
     }
