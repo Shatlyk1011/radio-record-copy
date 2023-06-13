@@ -92,6 +92,7 @@ const sortFilterBool = ref(false)
     top: 5rem;
     left: 0;
     border-radius: 0.8rem;
+    z-index: 35;
 
     ul {
       display: flex;

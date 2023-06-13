@@ -4,9 +4,8 @@
     <div class="wrap padding-10-x">
       <MenuThree />
     </div>
-    <div class="padding-10-x">
-      <ChannelsComponent />
-    </div>
+
+    <ChannelsComponent />
   </main>
 </template>
 
