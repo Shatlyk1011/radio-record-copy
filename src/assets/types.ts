@@ -45,3 +45,21 @@ export interface IStation {
   mark: null
   updated: string
 }
+
+export interface ITrack {
+  artist: string
+  id: number
+  image100: string
+  image200: string
+  image600: string
+  itunesId: string
+  listenUrl: string
+  noFav: boolean
+  noShow: boolean
+  shareUrl: string
+  song: string
+}
+export interface IPlaylist {
+  id: number
+  track: ITrack
+}

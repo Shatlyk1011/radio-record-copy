@@ -134,7 +134,7 @@ const slides = [
       opacity: 1;
     }
     .prevEl {
-      left: 3rem;
+      left: 2rem;
       z-index: 20;
       z-index: 56;
 
@@ -145,7 +145,7 @@ const slides = [
     }
 
     .nextEl {
-      right: 3rem;
+      right: 2rem;
       z-index: 20;
     }
   }

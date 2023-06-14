@@ -1,5 +1,5 @@
 <template>
-  <div class="item">
+  <div class="item" @click="handleStation(station)">
     <div class="svg" v-html="station.svg_outline"></div>
     <div class="title">{{ station.title }}</div>
   </div>
@@ -9,12 +9,16 @@
 import type { PropType } from 'vue'
 import type { IStation } from '@/assets/types'
 
+import useStation from '@/composables/useStation'
+
 defineProps({
   station: {
     required: true,
     type: Object as PropType<IStation>
   }
 })
+
+const { handleStation } = useStation()
 </script>
 
 <style lang="scss">
@@ -24,12 +28,14 @@ defineProps({
   border-radius: 0.8rem;
   background-color: rgba($color-white, 0.07);
   display: flex;
-  flex-grow: 1;
   flex-direction: column;
   align-items: center;
   height: 16rem;
-  box-sizing: border-box;
-  flex-basis: 13rem;
+  flex-basis: 11.1111%;
+  flex-grow: 0;
+  flex-shrink: 0;
+
+  cursor: pointer;
 
   &:hover {
     background-color: rgba($color-white, 0.1);
@@ -44,7 +50,7 @@ defineProps({
     width: 9.6rem;
     height: 9.6rem;
     padding: 0.8rem;
-    transition: all 0.15s linear;
+    transition: all 0.1s linear;
     stroke: $color-gray-2;
     opacity: 0.5;
   }

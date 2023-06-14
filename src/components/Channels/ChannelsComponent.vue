@@ -23,10 +23,11 @@ import { stations } from '@/db'
 <style lang="scss" scoped>
 .section-channels {
   .channels {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.6rem;
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
     margin-top: 2.4rem;
+
+    gap: 1.6rem;
   }
 }
 </style>
