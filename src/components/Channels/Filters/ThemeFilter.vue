@@ -36,36 +36,62 @@
           </ul>
         </div>
       </transition>
-      <div class="selected-theme">
-        <div class="name">{{ /* selectedTheme */ }}</div>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="M12.0002 10.586L16.9502 5.636L18.3642 7.05L13.4142 12L18.3642 16.95L16.9502 18.364L12.0002 13.414L7.05023 18.364L5.63623 16.95L10.5862 12L5.63623 7.05L7.05023 5.636L12.0002 10.586Z"
-          ></path>
-        </svg>
+      <div class="selected-theme" v-if="selectedThemeName">
+        <div class="wrap">
+          <div id="icon" v-html="selectedThemeIcon"></div>
+          <div class="name">{{ selectedThemeName }}</div>
+        </div>
+        <router-link to="/">
+          <svg
+            class="close"
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M12.0002 10.586L16.9502 5.636L18.3642 7.05L13.4142 12L18.3642 16.95L16.9502 18.364L12.0002 13.414L7.05023 18.364L5.63623 16.95L10.5862 12L5.63623 7.05L7.05023 5.636L12.0002 10.586Z"
+            ></path>
+          </svg>
+        </router-link>
       </div>
     </OnClickOutside>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, type PropType } from 'vue'
+import { ref, type PropType, computed } from 'vue'
+import { useRoute } from 'vue-router'
 import { OnClickOutside } from '@vueuse/components'
 import type { ITag } from '@/assets/types'
 
-defineProps({
+const props = defineProps({
   tags: {
     type: Array as PropType<ITag[]>,
     required: true
   }
 })
 
+const route = useRoute()
+
 const themeFilterBool = ref(false)
+
+const selectedThemeName = computed(() => {
+  if (route.params.tag) {
+    let tag = route.params.tag.slice(12) as string
+    return tag
+  } else return null
+})
+
+const selectedThemeIcon = computed(() => {
+  if (route.params.tag && selectedThemeName.value) {
+    let selected = props.tags.filter((tag) => {
+      let tagName = tag.name.toLowerCase()
+      return tagName == selectedThemeName.value!.toLowerCase()
+    })
+    return selected[0].svg
+  } else return false
+})
 </script>
 
 <style lang="scss">
@@ -130,13 +156,38 @@ const themeFilterBool = ref(false)
   }
 
   .selected-theme {
-    color: red;
+    color: $color-text;
     position: absolute;
     top: 0;
     width: 100%;
     height: 100%;
-    background: $color-white;
+    background: $color-gray-3;
     border-radius: 0.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 1.6rem;
+    box-sizing: border-box;
+    font-weight: 600;
+
+    .wrap {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      svg {
+        fill: $color-white !important;
+        width: 2.4rem;
+        height: 2.4rem;
+      }
+    }
+
+    .close {
+      padding: 2px;
+      border-radius: 100%;
+      background-color: rgba($color-text, 0.4);
+      cursor: pointer;
+      fill: $color-gray-3;
+    }
   }
 }
 </style>
