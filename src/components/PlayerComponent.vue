@@ -49,14 +49,11 @@
 
         <div class="track-info">
           <div class="track-img">
-            <img
-              src="https://is3-ssl.mzstatic.com/image/thumb/Music125/v4/34/88/bc/3488bcb0-ba44-c227-cbe0-36efe4451bf7/source/100x100bb.jpg"
-              alt=""
-            />
+            <img :src="playlist?.track.image100" alt="" />
           </div>
-          <div class="title-wrap">
-            <div class="title">Lorem ipsum dolor sit amet.</div>
-            <div class="subtitle">Lorem ipsum dolor sit.</div>
+          <div class="title-wrap" v-if="playlist">
+            <div class="title">{{ playlist.track.artist }}</div>
+            <div class="subtitle">{{ playlist.track.song }}</div>
           </div>
 
           <div class="heart">
@@ -84,24 +81,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { useMediaControls } from '@vueuse/core'
 
 import LoadingComponent from '@/components/shared/LoadingComponent.vue'
 
 import useStation from '@/composables/useStation'
-import getCurrentPlaylist from '@/composables/getCurrentPlaylist'
+import { stations } from '@/db'
 
-const { channel, isPending } = useStation()
-
-const { respond, getPlaylist } = getCurrentPlaylist()
-getPlaylist(12)
-
-console.log('respond', respond.value)
-
-setTimeout(() => {
-  console.log('respond', respond.value)
-}, 3000)
+const { channel, playlist, getPlaylist, handleStation } = useStation()
 
 const audio = ref()
 
@@ -109,10 +97,15 @@ const { playing, waiting, volume } = useMediaControls(audio, {
   src: channel.value?.stream_128
 })
 
-watch(channel, async () => {
-  if (channel.value) {
-    await getPlaylist(channel.value.id)
-  }
+const interval = setInterval(async () => {
+  console.log('interval tick')
+  await getPlaylist(channel.value!.id)
+}, 4000)
+onBeforeUnmount(() => clearInterval(interval))
+
+onMounted(async () => {
+  await handleStation()
+  console.log('playlistmounted', playlist.value)
 })
 </script>
 
