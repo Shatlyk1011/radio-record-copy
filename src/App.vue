@@ -3,6 +3,7 @@
     <div class="container">
       <MainNav />
       <router-view />
+      <FooterComponent />
     </div>
     <PlayerComponent class="player-component" />
   </div>
@@ -11,6 +12,7 @@
 <script setup>
 import MainNav from '@/components/MainNav.vue'
 import PlayerComponent from '@/components/PlayerComponent.vue'
+import FooterComponent from '@/components/FooterComponent.vue'
 </script>
 
 <style lang="scss">
