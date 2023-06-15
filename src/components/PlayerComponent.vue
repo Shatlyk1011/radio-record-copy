@@ -73,10 +73,16 @@
 
       <div class="volume">
         <img src="./../assets/icons/volume.svg" alt="volume icon" />
-        <input type="range" />
+        <input
+          class="range"
+          type="range"
+          min="0"
+          max="100"
+          @input="handleVolume"
+        />
       </div>
     </div>
-    <audio autoplay :src="channel?.stream_320" ref="audio"></audio>
+    <audio autoplay :src="channel?.stream_128" ref="audio"></audio>
   </section>
 </template>
 
@@ -87,25 +93,25 @@ import { useMediaControls } from '@vueuse/core'
 import LoadingComponent from '@/components/shared/LoadingComponent.vue'
 
 import useStation from '@/composables/useStation'
-import { stations } from '@/db'
 
 const { channel, playlist, getPlaylist, handleStation } = useStation()
 
 const audio = ref()
+const { playing, waiting, volume, buffered } = useMediaControls(audio)
 
-const { playing, waiting, volume } = useMediaControls(audio, {
-  src: channel.value?.stream_128
-})
+const handleVolume = (e: Event) => {
+  const val = parseFloat((e.target as HTMLInputElement).value) / 100
+  volume.value = val
+}
 
 const interval = setInterval(async () => {
-  console.log('interval tick')
   await getPlaylist(channel.value!.id)
-}, 4000)
+}, 5000)
 onBeforeUnmount(() => clearInterval(interval))
 
 onMounted(async () => {
   await handleStation()
-  console.log('playlistmounted', playlist.value)
+  console.log('channel', channel.value)
 })
 </script>
 
@@ -123,7 +129,6 @@ onMounted(async () => {
       display: flex;
       gap: 2rem;
       align-items: center;
-
       height: 6.4rem;
       button {
         all: unset;
@@ -138,34 +143,10 @@ onMounted(async () => {
         transition: all 0.25s ease-out;
         position: relative;
 
-        img {
-          display: inline-block;
-
-          z-index: 200;
-        }
-
         &:hover {
-          &::before {
-            opacity: 1;
-            transform: translate(-50%, -50%);
-            width: 6.4rem;
-            height: 6.4rem;
+          &::after {
+            background-color: $color-main;
           }
-        }
-
-        &::before {
-          content: '';
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          background-color: $color-main;
-          z-index: 19;
-          width: 4.8rem;
-          height: 4.8rem;
-          border-radius: 100%;
-
-          transition: all 0.25s ease-out;
         }
 
         &::after {
@@ -176,11 +157,26 @@ onMounted(async () => {
           transform: translate(-50%, -50%);
           background-color: rgba($color-main, 0.25);
           z-index: 19;
-          width: 6.4rem;
-          height: 6.4rem;
+          padding: 3.2rem;
           border-radius: 100%;
+        }
 
-          transition: all 0.25s ease-out;
+        &::before {
+          content: '';
+          animation: pulse 1.4s ease-in-out infinite;
+          position: absolute;
+          border-radius: 100%;
+          z-index: 31000;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          right: 0;
+        }
+
+        img {
+          display: inline-block;
+
+          z-index: 200;
         }
       }
       svg {
@@ -269,9 +265,73 @@ onMounted(async () => {
       img {
       }
 
+      /********** Range Input Styles **********/
+      /*Range Reset*/
       input[type='range'] {
+        -webkit-appearance: none;
+        appearance: none;
+        background: transparent;
+        cursor: pointer;
+      }
+
+      /* Removes default focus */
+      input[type='range']:focus {
+        outline: none;
+      }
+
+      /* Chrome, Safari, Opera and Edge Chromium styles */
+
+      input[type='range']::-webkit-slider-runnable-track {
+        background-color: $color-white;
+        border-radius: 1rem;
+        height: 3px;
+      }
+
+      input[type='range']::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        margin-top: -3px;
+
+        background-color: $color-text;
+        height: 1rem;
+        width: 1rem;
+        border-radius: 100%;
+      }
+
+      /******** Firefox styles ********/
+
+      input[type='range']::-moz-range-track {
+        background-color: $color-white;
+        border-radius: 1rem;
+        height: 3px;
+      }
+
+      input[type='range']::-moz-range-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        margin-top: -3px;
+
+        background-color: $color-text;
+        height: 1rem;
+        width: 1rem;
+        border-radius: 100%;
+      }
+
+      input[type='range']:focus::-moz-range-thumb {
+        background-color: $color-white;
+        border-radius: 0.5rem;
+        height: 0.5rem;
       }
     }
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0rem rgba($color-white, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 0 1.6rem rgba($color-white, 0);
   }
 }
 </style>

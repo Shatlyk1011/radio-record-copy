@@ -10,7 +10,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import SortFilter from '@/components/Channels/Filters/SortFilter.vue'
 import StyleFilter from '@/components/Channels/Filters/StyleFilter.vue'
 import ThemeFilter from '@/components/Channels/Filters//ThemeFilter.vue'
