@@ -22,6 +22,7 @@ import { stations } from '@/db'
 
 const route = useRoute()
 
+/* filter by theme */
 const computedStations = computed(() => {
   if (route.params.tag) {
     const tag = route.params.tag.slice(12).toString().toLowerCase()
@@ -35,7 +36,6 @@ const computedStations = computed(() => {
   } else return stations
 })
 
-console.log('computedStations', computedStations.value)
 watch(computedStations, () => {
   console.log('watch', computedStations.value)
 })

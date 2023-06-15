@@ -5,6 +5,7 @@ import { stations } from '@/db'
 
 const channel = ref<IStation>()
 const playlist = ref<IPlaylist>()
+const stationPlaying = ref(false)
 
 const getPlaylist = async (id: number) => {
   const response = await fetch('https://www.radiorecord.ru/api/stations/now/')
@@ -26,7 +27,7 @@ const handleStation = async (station?: IStation) => {
   }
 }
 const useStation = () => {
-  return { channel, playlist, handleStation, getPlaylist }
+  return { channel, playlist, handleStation, getPlaylist, stationPlaying }
 }
 
 export default useStation
