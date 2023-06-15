@@ -72,7 +72,16 @@
       </div>
 
       <div class="volume">
-        <img src="./../assets/icons/volume.svg" alt="volume icon" />
+        <img
+          src="./../assets/icons/volume.svg"
+          alt="volume icon"
+          v-if="!noSound"
+        />
+        <img
+          src="./../assets/icons/no-volume.svg"
+          alt="no volume icon"
+          v-else
+        />
         <input
           class="range"
           type="range"
@@ -97,11 +106,13 @@ import useStation from '@/composables/useStation'
 const { channel, playlist, getPlaylist, handleStation } = useStation()
 
 const audio = ref()
-const { playing, waiting, volume, buffered } = useMediaControls(audio)
+const noSound = ref(false)
+const { playing, waiting, volume } = useMediaControls(audio)
 
 const handleVolume = (e: Event) => {
   const val = parseFloat((e.target as HTMLInputElement).value) / 100
   volume.value = val
+  val == 0 ? (noSound.value = true) : (noSound.value = false)
 }
 
 const interval = setInterval(async () => {
@@ -140,12 +151,12 @@ onMounted(async () => {
         display: flex;
         justify-content: center;
         align-items: center;
-        transition: all 0.25s ease-out;
+        transition: all 0.25s linear;
         position: relative;
 
         &:hover {
           &::after {
-            background-color: $color-main;
+            animation: scale 0.25s linear both;
           }
         }
 
@@ -332,6 +343,17 @@ onMounted(async () => {
   }
   100% {
     box-shadow: 0 0 0 1.6rem rgba($color-white, 0);
+  }
+}
+
+@keyframes scale {
+  0% {
+    transform: translate(-50%, -50%) scale(0.9);
+    background-color: rgba($color-main, 0.25);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    background-color: rgba($color-main, 1);
   }
 }
 </style>
