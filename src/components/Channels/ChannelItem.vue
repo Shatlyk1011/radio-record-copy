@@ -1,24 +1,35 @@
 <template>
-  <div class="item" @click="handleStation(station)">
-    <div class="svg" v-html="station.svg_outline"></div>
+  <div
+    :class="['item', stationNameCheck && stationPlaying ? 'active' : '']"
+    @click="handleStation(station)"
+  >
+    <div
+      class="svg"
+      v-html="stationNameCheck ? station.svg_fill : station.svg_outline"
+    ></div>
     <div class="title">{{ station.title }}</div>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { PropType } from 'vue'
+import { computed, type PropType } from 'vue'
 import type { IStation } from '@/assets/types'
 
 import useStation from '@/composables/useStation'
 
-defineProps({
+const props = defineProps({
   station: {
     required: true,
     type: Object as PropType<IStation>
   }
 })
 
-const { handleStation } = useStation()
+const { handleStation, channel, stationPlaying } = useStation()
+
+const stationNameCheck = computed(() => {
+  let stationTitle = props.station.title.toLowerCase()
+  return stationTitle === channel.value?.title.toLowerCase()
+})
 </script>
 
 <style lang="scss">
@@ -31,11 +42,20 @@ const { handleStation } = useStation()
   flex-direction: column;
   align-items: center;
   height: 16rem;
-  flex-basis: 11.1111%;
-  flex-grow: 0;
-  flex-shrink: 0;
-
+  transition: all 0.1s linear;
   cursor: pointer;
+
+  &.active {
+    background-color: $color-main;
+
+    &:hover {
+      background-color: $color-main;
+    }
+
+    svg {
+      opacity: 1;
+    }
+  }
 
   &:hover {
     background-color: rgba($color-white, 0.1);
@@ -51,7 +71,6 @@ const { handleStation } = useStation()
     height: 9.6rem;
     padding: 0.8rem;
     transition: all 0.1s linear;
-    stroke: $color-gray-2;
     opacity: 0.5;
   }
 

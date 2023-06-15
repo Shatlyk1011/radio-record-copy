@@ -96,14 +96,15 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useMediaControls } from '@vueuse/core'
 
 import LoadingComponent from '@/components/shared/LoadingComponent.vue'
 
 import useStation from '@/composables/useStation'
 
-const { channel, playlist, getPlaylist, handleStation } = useStation()
+const { channel, playlist, getPlaylist, handleStation, stationPlaying } =
+  useStation()
 
 const audio = ref()
 const noSound = ref(false)
@@ -120,10 +121,9 @@ const interval = setInterval(async () => {
 }, 5000)
 onBeforeUnmount(() => clearInterval(interval))
 
-onMounted(async () => {
-  await handleStation()
-  console.log('channel', channel.value)
-})
+onMounted(async () => await handleStation())
+
+watch(playing, () => (stationPlaying.value = playing.value))
 </script>
 
 <style lang="scss" scoped>
