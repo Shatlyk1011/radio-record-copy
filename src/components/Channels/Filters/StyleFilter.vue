@@ -1,11 +1,7 @@
 <template>
   <div class="style-filter">
     <OnClickOutside @trigger="styleFilterBool = false">
-      <div
-        class="style-wrap"
-        tabindex="0"
-        @click="styleFilterBool = !styleFilterBool"
-      >
+      <div class="style-wrap" tabindex="0" @click="styleFilterBool = !styleFilterBool">
         <p>Стили</p>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -23,10 +19,15 @@
       <transition name="filter">
         <div class="style-list" v-if="styleFilterBool">
           <ul>
-            <li v-for="genre in genres" :key="genre.id">
+            <router-link
+              class="li"
+              :to="{ name: 'Home', params: { style: `sort-by-style=${genre.name}` } }"
+              v-for="genre in genres"
+              :key="genre.id"
+            >
               <span>{{ genre.name.toLowerCase() }}</span>
               <img src="@/assets/icons/check.svg" alt="check icon" />
-            </li>
+            </router-link>
           </ul>
         </div>
       </transition>
@@ -85,7 +86,9 @@ const styleFilterBool = ref(false)
     ul {
       columns: 2;
       text-transform: capitalize;
-      li {
+      .li {
+        color: $color-text;
+        text-decoration: none;
         display: flex;
         align-items: center;
         justify-content: space-between;

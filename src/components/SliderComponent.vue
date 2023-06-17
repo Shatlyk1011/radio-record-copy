@@ -26,7 +26,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { Navigation } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
@@ -80,11 +80,7 @@ const slides = [
       border-radius: 1.6rem;
       overflow: hidden;
       background: rgb(229, 229, 229);
-      background: linear-gradient(
-        180deg,
-        rgba(229, 229, 229, 1) 0%,
-        rgba(37, 37, 37, 1) 100%
-      );
+      background: linear-gradient(180deg, rgba(229, 229, 229, 1) 0%, rgba(37, 37, 37, 1) 100%);
 
       &:before {
         content: '';
