@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="['item', stationNameCheck && stationPlaying ? 'active' : '']"
+    :class="['item', stationNameCheck && stationPlaying ? 'active' : null]"
     @click="handleStation(station)"
   >
     <div
