@@ -3,11 +3,7 @@
     <ChannelFilters />
 
     <div class="channels">
-      <ChannelItem
-        v-for="station in computedStations"
-        :key="station.id"
-        :station="station"
-      />
+      <ChannelItem v-for="station in computedStations" :key="station.id" :station="station" />
     </div>
   </section>
 </template>
@@ -24,20 +20,25 @@ const route = useRoute()
 
 /* filter by theme */
 const computedStations = computed(() => {
-  if (route.params.tag) {
-    const tag = route.params.tag.slice(12).toString().toLowerCase()
+  if (route.params.theme) {
+    const theme = route.params.theme.slice(14).toString().toLowerCase()
     return stations.filter((station) => {
       let genres = station.genre
         .map((g) => g.name)
         .join()
         .toLowerCase()
-      return genres.includes(tag)
+      return genres.includes(theme)
+    })
+  } else if (route.params.style) {
+    const style = route.params.style.slice(14).toString().toLowerCase()
+    return stations.filter((station) => {
+      let styles = station.genre
+        .map((g) => g.name)
+        .join()
+        .toLowerCase()
+      return styles.includes(style)
     })
   } else return stations
-})
-
-watch(computedStations, () => {
-  console.log('watch', computedStations.value)
 })
 </script>
 

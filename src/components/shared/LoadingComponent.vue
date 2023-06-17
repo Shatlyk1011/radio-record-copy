@@ -17,9 +17,12 @@
 
 <style>
 .spinner {
-  font-size: 20px;
+  font-size: 40px;
   position: relative;
   display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 1em;
   height: 1em;
   z-index: 200;

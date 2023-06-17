@@ -3,9 +3,9 @@
     <div class="player">
       <div class="menu">
         <button type="button" @click="playing = !playing">
-          <img src="./../assets/icons/pause.svg" alt="pause icon" v-if="playing && !waiting" />
-          <LoadingComponent v-if="waiting" />
-          <img src="./../assets/icons/play.svg" alt="pause icon" v-if="!playing && !waiting" />
+          <img src="./../assets/icons/pause.svg" alt="pause icon" v-if="playing && !isWaiting" />
+          <LoadingComponent v-if="isWaiting" />
+          <img src="./../assets/icons/play.svg" alt="pause icon" v-if="!playing && !isWaiting" />
         </button>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
           <path
@@ -54,7 +54,14 @@
         <input @input="handleVolume" class="range" type="range" min="0" max="100" ref="range" />
       </div>
     </div>
-    <audio autoplay :src="channel?.stream_128" ref="audio" :muted="noSound"></audio>
+    <audio
+      autoplay
+      :onLoadstart="() => (isWaiting = true)"
+      :onPlaying="() => (isWaiting = false)"
+      :src="channel?.stream_128"
+      ref="audio"
+      :muted="noSound"
+    ></audio>
   </section>
 </template>
 
@@ -66,13 +73,13 @@ import LoadingComponent from '@/components/shared/LoadingComponent.vue'
 
 import useStation from '@/composables/useStation'
 
-const { channel, playlist, getPlaylist, handleStation, stationPlaying } = useStation()
+const { channel, playlist, getPlaylist, handleStation, isPlaying, isWaiting } = useStation()
 
 const audio = ref()
 const noSound = ref(false)
 const range = ref()
 
-const { playing, waiting, volume } = useMediaControls(audio)
+const { playing, volume } = useMediaControls(audio)
 
 let storage = localStorage
 
@@ -91,7 +98,7 @@ const interval = setInterval(async () => {
 onMounted(async () => {
   await handleStation()
 
-  //set default values volume from local storage
+  //set default volume from local storage
   let localVolume = storage.getItem('volume')
   if (localVolume) {
     let toInt = parseFloat(localVolume)
@@ -101,13 +108,13 @@ onMounted(async () => {
 })
 
 onBeforeUnmount(() => clearInterval(interval))
-watch(playing, () => (stationPlaying.value = playing.value))
+watch(playing, () => (isPlaying.value = playing.value))
 </script>
 
 <style lang="scss" scoped>
 @import '@/globals';
 .section-player {
-  z-index: 100;
+  z-index: 1000;
 
   .player {
     display: flex;
@@ -131,6 +138,10 @@ watch(playing, () => (stationPlaying.value = playing.value))
         align-items: center;
         transition: all 0.25s linear;
         position: relative;
+
+        .spinner {
+          font-size: 2.4rem;
+        }
 
         &:hover {
           &::after {
@@ -273,7 +284,7 @@ watch(playing, () => (stationPlaying.value = playing.value))
       input[type='range']::-webkit-slider-runnable-track {
         background-color: $color-white;
         border-radius: 1rem;
-        height: 3px;
+        height: 4px;
       }
 
       input[type='range']::-webkit-slider-thumb {
@@ -292,7 +303,7 @@ watch(playing, () => (stationPlaying.value = playing.value))
       input[type='range']::-moz-range-track {
         background-color: $color-white;
         border-radius: 1rem;
-        height: 3px;
+        height: 4px;
       }
 
       input[type='range']::-moz-range-thumb {

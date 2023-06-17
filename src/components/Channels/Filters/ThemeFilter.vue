@@ -1,11 +1,7 @@
 <template>
   <div class="theme-filter">
     <OnClickOutside @trigger="themeFilterBool = false">
-      <div
-        tabindex="0"
-        class="theme-wrap"
-        @click="themeFilterBool = !themeFilterBool"
-      >
+      <div tabindex="0" class="theme-wrap" @click="themeFilterBool = !themeFilterBool">
         <p>Темы</p>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -26,7 +22,7 @@
             <router-link
               class="li"
               @click="themeFilterBool = false"
-              :to="{ name: 'Home', params: { tag: `sortByTheme=${tag.name}` } }"
+              :to="{ name: 'Home', params: { theme: `sort-by-theme=${tag.name}` } }"
               v-for="tag in tags"
               :key="tag.id"
             >
@@ -36,6 +32,8 @@
           </ul>
         </div>
       </transition>
+
+      <!-- close button with selected theme -->
       <div class="selected-theme" v-if="selectedThemeName">
         <div class="wrap">
           <div id="icon" v-html="selectedThemeIcon"></div>
@@ -77,14 +75,14 @@ const route = useRoute()
 const themeFilterBool = ref(false)
 
 const selectedThemeName = computed(() => {
-  if (route.params.tag) {
-    let tag = route.params.tag.slice(12) as string
-    return tag
+  if (route.params.theme) {
+    let theme = route.params.theme.slice(14) as string
+    return theme
   } else return null
 })
 
 const selectedThemeIcon = computed(() => {
-  if (route.params.tag && selectedThemeName.value) {
+  if (route.params.theme && selectedThemeName.value) {
     let selected = props.tags.filter((tag) => {
       let tagName = tag.name.toLowerCase()
       return tagName == selectedThemeName.value!.toLowerCase()
@@ -136,10 +134,10 @@ const selectedThemeIcon = computed(() => {
       gap: 1.6rem;
       text-transform: capitalize;
       .li {
-        display: flex;
-        align-items: center;
         color: $color-text;
         text-decoration: none;
+        display: flex;
+        align-items: center;
         gap: 1rem;
         font-weight: 600;
         cursor: pointer;

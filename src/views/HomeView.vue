@@ -9,7 +9,7 @@
   </main>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import SliderComponent from '@/components/SliderComponent.vue'
 import MenuThree from '@/components/shared/MenuThree.vue'
 import ChannelsComponent from '@/components/Channels/ChannelsComponent.vue'
