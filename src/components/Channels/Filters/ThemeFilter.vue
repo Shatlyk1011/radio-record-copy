@@ -1,7 +1,7 @@
 <template>
   <div class="theme-filter">
-    <OnClickOutside @trigger="themeFilterBool = false">
-      <div tabindex="0" class="theme-wrap" @click="themeFilterBool = !themeFilterBool">
+    <OnClickOutside @trigger="showThemeFilter = false">
+      <div tabindex="0" class="theme-wrap" @click="showThemeFilter = !showThemeFilter">
         <p>Темы</p>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -17,11 +17,11 @@
       </div>
 
       <transition name="filter">
-        <div class="theme-list" v-if="themeFilterBool">
+        <div class="theme-list" v-if="showThemeFilter">
           <ul>
             <router-link
               class="li"
-              @click="themeFilterBool = false"
+              @click="showThemeFilter = false"
               :to="{ name: 'Home', params: { theme: `sort-by-theme=${tag.name}` } }"
               v-for="tag in tags"
               :key="tag.id"
@@ -71,8 +71,7 @@ const props = defineProps({
 })
 
 const route = useRoute()
-
-const themeFilterBool = ref(false)
+const showThemeFilter = ref(false)
 
 const selectedThemeName = computed(() => {
   if (route.params.theme) {
