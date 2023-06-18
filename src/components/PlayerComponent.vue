@@ -73,15 +73,14 @@ import LoadingComponent from '@/components/shared/LoadingComponent.vue'
 
 import useStation from '@/composables/useStation'
 
-const { channel, playlist, getPlaylist, handleStation, isPlaying, isWaiting } = useStation()
-
 const audio = ref()
 const noSound = ref(false)
 const range = ref()
+let storage = localStorage
 
 const { playing, volume } = useMediaControls(audio)
 
-let storage = localStorage
+const { channel, playlist, getPlaylist, handleStation, isPlaying, isWaiting } = useStation()
 
 const handleVolume = (e: Event) => {
   const val = parseFloat((e.target as HTMLInputElement).value) / 100

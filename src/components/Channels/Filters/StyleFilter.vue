@@ -1,7 +1,7 @@
 <template>
   <div class="style-filter">
-    <OnClickOutside @trigger="styleFilterBool = false">
-      <div class="style-wrap" tabindex="0" @click="styleFilterBool = !styleFilterBool">
+    <OnClickOutside @trigger="showStyleFilter = false">
+      <div class="style-wrap" tabindex="0" @click="showStyleFilter = !showStyleFilter">
         <p>Стили</p>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -17,16 +17,16 @@
       </div>
 
       <transition name="filter">
-        <div class="style-list" v-if="styleFilterBool">
+        <div class="style-list" v-if="showStyleFilter">
           <ul>
             <router-link
               class="li"
+              @click="showStyleFilter = false"
               :to="{ name: 'Home', params: { style: `sort-by-style=${genre.name}` } }"
               v-for="genre in genres"
               :key="genre.id"
             >
               <span>{{ genre.name.toLowerCase() }}</span>
-              <img src="@/assets/icons/check.svg" alt="check icon" />
             </router-link>
           </ul>
         </div>
@@ -47,7 +47,7 @@ defineProps({
   }
 })
 
-const styleFilterBool = ref(false)
+const showStyleFilter = ref(false)
 </script>
 
 <style lang="scss">

@@ -1,11 +1,12 @@
 <template>
   <div
+    ref="item"
     :class="['item', stationNameCheck && isPlaying ? 'active' : null]"
     @click="handleStation(station)"
   >
     <div class="svg-container">
       <span v-html="stationNameCheck ? station.svg_fill : station.svg_outline"></span>
-      <LoadingComponent class="loading" v-if="stationNameCheck && isWaiting" />
+      <LoadingComponent class="loading" v-if="stationNameCheck && isWaiting && hasActiveClass" />
     </div>
 
     <div class="title">{{ station.title }}</div>
@@ -13,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, type PropType } from 'vue'
+import { computed, ref, type PropType } from 'vue'
 import type { IStation } from '@/assets/types'
 
 import LoadingComponent from '@/components/shared/LoadingComponent.vue'
@@ -28,10 +29,17 @@ const props = defineProps({
 })
 
 const { handleStation, channel, isPlaying, isWaiting } = useStation()
+const item = ref()
 
 const stationNameCheck = computed(() => {
   let stationTitle = props.station.title.toLowerCase()
   return stationTitle === channel.value?.title.toLowerCase()
+})
+
+const hasActiveClass = computed(() => {
+  if (item.value) {
+    return item.value.classList.contains('active')
+  } else return false
 })
 </script>
 
