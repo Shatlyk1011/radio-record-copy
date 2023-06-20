@@ -55,8 +55,8 @@
       </div>
     </div>
     <audio
-      autoplay
-      :onLoadstart="() => (isWaiting = true)"
+      :autoplay="autoplay"
+      :onLoadstart="onLoadStart"
       :onPlaying="() => (isWaiting = false)"
       :src="channel?.stream_128"
       ref="audio"
@@ -80,7 +80,12 @@ let storage = localStorage
 
 const { playing, volume } = useMediaControls(audio)
 
-const { channel, playlist, getPlaylist, handleStation, isPlaying, isWaiting } = useStation()
+const onLoadStart = () => {
+  if (autoplay.value) isWaiting.value = true
+}
+
+const { channel, playlist, getPlaylist, handleStation, isPlaying, isWaiting, autoplay } =
+  useStation()
 
 const handleVolume = (e: Event) => {
   const val = parseFloat((e.target as HTMLInputElement).value) / 100
@@ -96,7 +101,6 @@ const interval = setInterval(async () => {
 
 onMounted(async () => {
   await handleStation()
-
   //set default volume from local storage
   let localVolume = storage.getItem('volume')
   if (localVolume) {

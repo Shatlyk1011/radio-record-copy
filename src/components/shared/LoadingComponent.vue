@@ -15,7 +15,7 @@
   </div>
 </template>
 
-<style>
+<style lang="scss">
 .spinner {
   font-size: 40px;
   position: relative;
