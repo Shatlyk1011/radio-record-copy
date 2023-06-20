@@ -52,6 +52,7 @@ const stationNameCheck = computed(() => {
 <style lang="scss">
 @import '@/globals';
 
+// no transition
 .item {
   border-radius: 0.8rem;
   background-color: rgba($color-white, 0.07);
@@ -60,7 +61,7 @@ const stationNameCheck = computed(() => {
   align-items: center;
   height: 16rem;
   position: relative;
-  transition: all 0.1s linear;
+
   cursor: pointer;
   position: relative;
   padding: 0.8rem;
