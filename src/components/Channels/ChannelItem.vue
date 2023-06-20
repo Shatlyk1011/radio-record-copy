@@ -4,9 +4,21 @@
     :class="['item', stationNameCheck && isPlaying ? 'active' : null]"
     @click="handleStation(station)"
   >
+    <svg
+      class="menu"
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      fill="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="M12 20C11.45 20 10.9793 19.8043 10.588 19.413C10.196 19.021 10 18.55 10 18C10 17.45 10.196 16.979 10.588 16.587C10.9793 16.1957 11.45 16 12 16C12.55 16 13.021 16.1957 13.413 16.587C13.8043 16.979 14 17.45 14 18C14 18.55 13.8043 19.021 13.413 19.413C13.021 19.8043 12.55 20 12 20ZM12 14C11.45 14 10.9793 13.804 10.588 13.412C10.196 13.0207 10 12.55 10 12C10 11.45 10.196 10.979 10.588 10.587C10.9793 10.1957 11.45 10 12 10C12.55 10 13.021 10.1957 13.413 10.587C13.8043 10.979 14 11.45 14 12C14 12.55 13.8043 13.0207 13.413 13.412C13.021 13.804 12.55 14 12 14ZM12 8C11.45 8 10.9793 7.804 10.588 7.412C10.196 7.02067 10 6.55 10 6C10 5.45 10.196 4.97933 10.588 4.588C10.9793 4.196 11.45 4 12 4C12.55 4 13.021 4.196 13.413 4.588C13.8043 4.97933 14 5.45 14 6C14 6.55 13.8043 7.02067 13.413 7.412C13.021 7.804 12.55 8 12 8Z"
+      ></path>
+    </svg>
     <div class="svg-container">
       <span v-html="stationNameCheck ? station.svg_fill : station.svg_outline"></span>
-      <LoadingComponent class="loading" v-if="stationNameCheck && isWaiting && hasActiveClass" />
+      <LoadingComponent class="loading" v-if="stationNameCheck && isWaiting" />
     </div>
 
     <div class="title">{{ station.title }}</div>
@@ -35,12 +47,6 @@ const stationNameCheck = computed(() => {
   let stationTitle = props.station.title.toLowerCase()
   return stationTitle === channel.value?.title.toLowerCase()
 })
-
-const hasActiveClass = computed(() => {
-  if (item.value) {
-    return item.value.classList.contains('active')
-  } else return false
-})
 </script>
 
 <style lang="scss">
@@ -53,7 +59,8 @@ const hasActiveClass = computed(() => {
   flex-direction: column;
   align-items: center;
   height: 16rem;
-
+  position: relative;
+  transition: all 0.1s linear;
   cursor: pointer;
   position: relative;
   padding: 0.8rem;
@@ -71,14 +78,37 @@ const hasActiveClass = computed(() => {
         opacity: 1;
       }
     }
+
+    .menu {
+      color: $color-text;
+      opacity: 1;
+    }
   }
 
   &:hover {
-    background-color: rgba($color-white, 0.1);
+    background-color: rgba($color-white, 0.15);
+
+    & > .menu {
+      opacity: 1;
+    }
 
     & > .svg-container > svg {
       opacity: 1;
       stroke: $color-white;
+    }
+  }
+
+  .menu {
+    position: absolute;
+    top: 3px;
+    right: 0;
+    color: $color-gray-2;
+    transition: all 0.1s linear;
+
+    opacity: 0;
+
+    &:hover {
+      color: $color-text;
     }
   }
 
@@ -114,6 +144,7 @@ const hasActiveClass = computed(() => {
     width: 200%;
     height: 200%;
     background-color: $color-main;
+    border-radius: 8px;
   }
 }
 </style>

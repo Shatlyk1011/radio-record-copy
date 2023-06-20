@@ -7,6 +7,7 @@ const channel = ref<IStation>()
 const playlist = ref<IPlaylist>()
 const isPlaying = ref(false)
 const isWaiting = ref(false)
+const autoplay = ref(false)
 
 const getPlaylist = async (id: number) => {
   const response = await fetch('https://www.radiorecord.ru/api/stations/now/')
@@ -22,13 +23,14 @@ const handleStation = async (station?: IStation) => {
   if (station) {
     channel.value = station
     await getPlaylist(channel.value.id)
+    autoplay.value = true
   } else {
     channel.value = stations[0]
     await getPlaylist(stations[0].id)
   }
 }
 const useStation = () => {
-  return { channel, playlist, handleStation, getPlaylist, isPlaying, isWaiting }
+  return { channel, playlist, handleStation, getPlaylist, isPlaying, isWaiting, autoplay }
 }
 
 export default useStation
