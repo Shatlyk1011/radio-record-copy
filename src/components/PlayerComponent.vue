@@ -283,7 +283,6 @@ watch(playing, () => (isPlaying.value = playing.value))
       }
 
       /* Chrome, Safari, Opera and Edge Chromium styles */
-
       input[type='range']::-webkit-slider-runnable-track {
         background-color: $color-white;
         border-radius: 1rem;
@@ -293,11 +292,11 @@ watch(playing, () => (isPlaying.value = playing.value))
       input[type='range']::-webkit-slider-thumb {
         -webkit-appearance: none;
         appearance: none;
-        margin-top: -3px;
+        margin-top: -5px;
 
         background-color: $color-text;
-        height: 1rem;
-        width: 1rem;
+        height: 1.5rem;
+        width: 1.5rem;
         border-radius: 100%;
       }
 
@@ -312,11 +311,11 @@ watch(playing, () => (isPlaying.value = playing.value))
       input[type='range']::-moz-range-thumb {
         -webkit-appearance: none;
         appearance: none;
-        margin-top: -3px;
+        margin-top: -5px;
 
         background-color: $color-text;
-        height: 1rem;
-        width: 1rem;
+        height: 1.5rem;
+        width: 1.5rem;
         border-radius: 100%;
       }
 
