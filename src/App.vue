@@ -5,13 +5,8 @@
       <router-view />
       <FooterComponent />
     </div>
-    <transition name="auth-transition">
-      <AuthenticationComponent
-        :showSidebar="showSidebar"
-        @closeSidebar="showSidebar = false"
-        v-if="showSidebar"
-      />
-    </transition>
+    <AuthenticationComponent :showSidebar="showSidebar" @closeSidebar="showSidebar = false" />
+    <!-- v-if="showSidebar" -->
     <PlayerComponent class="player-component" />
   </div>
 </template>
@@ -44,21 +39,5 @@ watch(showSidebar, () => {
   position: fixed;
   bottom: 0;
   width: 100%;
-}
-
-.auth-transition-enter-active {
-  transition: transform 0.2s linear;
-}
-
-.auth-transition-enter-from {
-  transform: translateX(100%);
-  opacity: 0;
-}
-.auth-transition-leave-active {
-}
-
-.auth-transition-leave-to {
-  // transform: translateX(100%);
-  opacity: 0;
 }
 </style>

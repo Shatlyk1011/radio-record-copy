@@ -87,7 +87,7 @@ const selectedThemeIcon = computed(() => {
       return tagName == selectedThemeName.value!.toLowerCase()
     })
     return selected[0].svg
-  } else return false
+  } else return null
 })
 </script>
 
@@ -181,7 +181,7 @@ const selectedThemeIcon = computed(() => {
     .close {
       padding: 2px;
       border-radius: 100%;
-      background-color: rgba($color-text, 0.4);
+      background-color: rgba($color-text, 0.5);
       cursor: pointer;
       fill: $color-gray-3;
     }

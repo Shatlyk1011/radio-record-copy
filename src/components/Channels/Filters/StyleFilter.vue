@@ -31,12 +31,31 @@
           </ul>
         </div>
       </transition>
+
+      <!-- close button with selected theme -->
+      <div class="selected-style" v-if="selectedStyleName">
+        <div class="name">{{ selectedStyleName }}</div>
+        <router-link to="/">
+          <svg
+            class="close"
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M12.0002 10.586L16.9502 5.636L18.3642 7.05L13.4142 12L18.3642 16.95L16.9502 18.364L12.0002 13.414L7.05023 18.364L5.63623 16.95L10.5862 12L5.63623 7.05L7.05023 5.636L12.0002 10.586Z"
+            ></path>
+          </svg>
+        </router-link>
+      </div>
     </OnClickOutside>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { useRoute } from 'vue-router'
 import { OnClickOutside } from '@vueuse/components'
 import { type IGenre } from '@/assets/types'
 
@@ -45,6 +64,15 @@ defineProps({
     required: true,
     type: Array<IGenre>
   }
+})
+
+const route = useRoute()
+
+const selectedStyleName = computed(() => {
+  if (route.params.style) {
+    let style = route.params.style.slice(14) as string
+    return style
+  } else return null
 })
 
 const showStyleFilter = ref(false)
@@ -82,6 +110,7 @@ const showStyleFilter = ref(false)
     padding: 1.6rem;
     background-color: $color-bg-2;
     border-radius: 0.8rem;
+    box-sizing: border-box;
     z-index: 35;
     ul {
       columns: 2;
@@ -111,6 +140,40 @@ const showStyleFilter = ref(false)
           margin-left: auto;
         }
       }
+    }
+  }
+
+  .selected-style {
+    color: $color-text;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: $color-gray-3;
+    border-radius: 0.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 1.6rem;
+    font-weight: 600;
+
+    .name {
+      font-size: 1.6rem;
+    }
+
+    svg {
+      fill: $color-white !important;
+      width: 2.4rem;
+      height: 2.4rem;
+      box-sizing: border-box;
+    }
+
+    .close {
+      padding: 2px;
+      border-radius: 100%;
+      background-color: rgba($color-text, 0.5);
+      cursor: pointer;
+      fill: $color-gray-3;
     }
   }
 }
