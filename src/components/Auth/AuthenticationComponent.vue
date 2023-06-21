@@ -1,6 +1,6 @@
 <template>
   <div :class="['auth', showSidebar ? 'bg' : '']">
-    <OnClickOutside @trigger="emitCloseSidebar">
+    <OnClickOutside class="wrap" @trigger="emitCloseSidebar">
       <component
         @changeView="switchComponent = !switchComponent"
         :is="switchComponent ? LoginComponent : RegisterComponent"
@@ -40,10 +40,22 @@ const switchComponent = ref(false)
   z-index: 1500;
   display: flex;
   justify-content: flex-end;
+  opacity: 0;
+  z-index: -1;
+  transition: all 0.3s linear;
 
-  // background: rgba($color-bg-2, 0.7);
+  .wrap {
+    transform: translateX(100%);
+    transition: all 0.3s linear;
+  }
 
   &.bg {
+    z-index: 999;
+    opacity: 1;
+    background-color: rgba($color-bg, 0.6);
+    .wrap {
+      transform: translateX(0%);
+    }
   }
 }
 </style>

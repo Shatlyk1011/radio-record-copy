@@ -65,7 +65,6 @@ const emitChangeView = () => emit('changeView')
   display: flex;
   flex-direction: column;
   width: 52rem;
-
   height: 100%;
 
   .top {

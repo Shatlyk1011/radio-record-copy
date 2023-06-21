@@ -208,7 +208,6 @@ header {
     }
 
     .search-li {
-      flex-grow: 1;
       justify-content: flex-start;
       cursor: auto;
 
