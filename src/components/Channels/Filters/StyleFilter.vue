@@ -155,19 +155,12 @@ const showStyleFilter = ref(false)
     justify-content: space-between;
     align-items: center;
     padding: 0.8rem 1.6rem;
+    box-sizing: border-box;
     font-weight: 600;
 
     .name {
       font-size: 1.6rem;
     }
-
-    svg {
-      fill: $color-white !important;
-      width: 2.4rem;
-      height: 2.4rem;
-      box-sizing: border-box;
-    }
-
     .close {
       padding: 2px;
       border-radius: 100%;

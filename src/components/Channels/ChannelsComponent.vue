@@ -2,9 +2,9 @@
   <section class="section-channels padding-10-x">
     <ChannelFilters />
 
-    <div :class="['channels', compact ? 'channels--compact' : '']">
+    <div :class="['channels', compactVal ? 'channels--compact' : '']">
       <ChannelItem
-        :compact="compact"
+        :compactVal="compactVal"
         v-for="station in computedStations"
         :key="station.id"
         :station="station"
@@ -14,41 +14,65 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import ChannelFilters from './Filters/ChannelFilters.vue'
 import ChannelItem from './ChannelItem.vue'
-import { useCompactView } from '@/store/store'
+import { useStorageCompact, useStorageOrder } from '@/store/store'
+
+/*  */
+import useStations from '@/composables/useStations'
+/*  */
 
 import { stations } from '@/db'
+import type { IStation } from '@/assets/types'
 
 const route = useRoute()
 
+const { computedStations } = useStations(stations)
+
+/* const { order } = useStorageOrder()
+
+let orderBy = (a: IStation, b: IStation) => {
+  if (order.value == 'alphabet') {
+    if (a.title < b.title) return -1
+    if (a.title > b.title) return 1
+    else return 0
+  } else if (order.value == 'new' || order.value == 'recommend') {
+    if (a.sort < b.sort) return -1
+    if (a.sort > b.sort) return 1
+    else return 0
+  } else return a.sort - b.sort
+} */
+
 /* filter by theme or style */
-const computedStations = computed(() => {
+/* const computedStations = computed(() => {
   if (route.params.theme) {
     const theme = route.params.theme.slice(14).toString().toLowerCase()
-    return stations.filter((station) => {
+    const filterByTheme = stations.filter((station) => {
       let genres = station.genre
         .map((g) => g.name)
         .join()
         .toLowerCase()
       return genres.includes(theme)
     })
+    return filterByTheme.sort(orderBy)
   } else if (route.params.style) {
     const style = route.params.style.slice(14).toString().toLowerCase()
-    return stations.filter((station) => {
+    const filterByStyle = stations.filter((station) => {
       let styles = station.genre
         .map((g) => g.name)
         .join()
         .toLowerCase()
       return styles.includes(style)
     })
-  } else return stations
-})
+    return filterByStyle.sort(orderBy)
+  } else return stations.sort(orderBy)
+}) */
 
 //compact view
-let compact = useCompactView()
+const compact = useStorageCompact()
+const compactVal = computed(() => JSON.parse(compact.value))
 </script>
 
 <style lang="scss" scoped>

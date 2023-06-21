@@ -5,7 +5,7 @@
     :class="[
       'item',
       stationNameCheck && isPlaying ? 'active' : null,
-      compact ? 'item--compact' : null
+      compactVal ? 'item--compact' : null
     ]"
     @click="handleStation(station)"
   >
@@ -24,8 +24,7 @@
     <div class="svg-container">
       <span v-html="stationNameCheck ? station.svg_fill : station.svg_outline"></span>
       <LoadingComponent
-        :compact="compact"
-        :class="['loading', compact ? 'loading--compact' : '']"
+        :class="['loading', compactVal ? 'loading--compact' : '']"
         v-if="stationNameCheck && isWaiting"
       />
     </div>
@@ -47,9 +46,9 @@ const props = defineProps({
     required: true,
     type: Object as PropType<IStation>
   },
-  compact: {
+  compactVal: {
     required: true,
-    type: [Boolean, String]
+    type: Boolean
   }
 })
 
