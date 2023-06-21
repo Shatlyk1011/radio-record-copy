@@ -9,28 +9,36 @@
         <div class="sort-filter-wrap" v-if="sortFilterBool">
           <ul>
             <li>Сортировака</li>
-            <li>
+            <li @click="orderByRecommend">
               Рекомендуемые
-              <img src="@/assets/icons/check.svg" alt="check icon" v-if="true" />
+              <img
+                v-if="order == SORT_BY_RECOMMEND"
+                src="@/assets/icons/check.svg"
+                alt="check icon"
+              />
             </li>
-            <li>
+            <li @click="orderByAlphabet">
               По Алфавиту
-              <img src="@/assets/icons/check.svg" alt="check icon" v-if="true" />
+              <img
+                v-if="order == SORT_BY_ALPHABET"
+                src="@/assets/icons/check.svg"
+                alt="check icon"
+              />
             </li>
-            <li>
+            <li @click="orderByNew">
               По новизне
-              <img src="@/assets/icons/check.svg" alt="check icon" v-if="true" />
+              <img v-if="order == SORT_BY_NEW" src="@/assets/icons/check.svg" alt="check icon" />
             </li>
           </ul>
           <ul>
             <li>Вид</li>
-            <li @click=";(compact = false), (sortFilterBool = false)">
+            <li @click="compact = 'false'">
               Полный
-              <img v-if="!compact" src="@/assets/icons/check.svg" alt="check icon" v />
+              <img v-if="compact === 'false'" src="@/assets/icons/check.svg" alt="check icon" v />
             </li>
-            <li @click=";(compact = true), (sortFilterBool = false)">
+            <li @click="compact = 'true'">
               Компактный
-              <img v-if="compact" src="@/assets/icons/check.svg" alt="check icon" />
+              <img v-if="compact === 'true'" src="@/assets/icons/check.svg" alt="check icon" />
             </li>
           </ul>
         </div>
@@ -42,11 +50,14 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { OnClickOutside } from '@vueuse/components'
-import { useCompactView } from '@/store/store'
+import { useStorageCompact, useStorageOrder } from '@/store/store'
+import { SORT_BY_RECOMMEND, SORT_BY_ALPHABET, SORT_BY_NEW } from '@/store/store'
 
 const sortFilterBool = ref(false)
 
-let compact = useCompactView()
+const compact = useStorageCompact()
+
+const { order, orderByRecommend, orderByAlphabet, orderByNew } = useStorageOrder()
 </script>
 
 <style lang="scss">
