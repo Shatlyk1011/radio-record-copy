@@ -1,11 +1,16 @@
 <template>
   <div
+    tabindex="0"
     ref="item"
-    :class="['item', stationNameCheck && isPlaying ? 'active' : null]"
+    :class="[
+      'item',
+      stationNameCheck && isPlaying ? 'active' : null,
+      compact ? 'item--compact' : null
+    ]"
     @click="handleStation(station)"
   >
     <svg
-      class="menu"
+      class="menu-icon"
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
@@ -18,7 +23,11 @@
     </svg>
     <div class="svg-container">
       <span v-html="stationNameCheck ? station.svg_fill : station.svg_outline"></span>
-      <LoadingComponent class="loading" v-if="stationNameCheck && isWaiting" />
+      <LoadingComponent
+        :compact="compact"
+        :class="['loading', compact ? 'loading--compact' : '']"
+        v-if="stationNameCheck && isWaiting"
+      />
     </div>
 
     <div class="title">{{ station.title }}</div>
@@ -37,6 +46,10 @@ const props = defineProps({
   station: {
     required: true,
     type: Object as PropType<IStation>
+  },
+  compact: {
+    required: true,
+    type: [Boolean, String]
   }
 })
 
@@ -52,7 +65,7 @@ const stationNameCheck = computed(() => {
 <style lang="scss">
 @import '@/globals';
 
-// no transition
+// no transition needed
 .item {
   border-radius: 0.8rem;
   background-color: rgba($color-white, 0.07);
@@ -61,7 +74,6 @@ const stationNameCheck = computed(() => {
   align-items: center;
   height: 16rem;
   position: relative;
-
   cursor: pointer;
   position: relative;
   padding: 0.8rem;
@@ -80,31 +92,61 @@ const stationNameCheck = computed(() => {
       }
     }
 
-    .menu {
+    .menu-icon {
       color: $color-text;
       opacity: 1;
+    }
+  }
+
+  &.item--compact {
+    flex-direction: row;
+    height: auto;
+
+    .menu-icon {
+      top: 50%;
+      transform: translate(2rem, -50%);
+      right: 1rem;
+    }
+
+    .svg-container {
+      height: 4.8rem;
+      width: 4.8rem;
+    }
+
+    &:hover {
+      .menu-icon {
+        transform: translate(0, -50%);
+        right: 1rem;
+      }
+    }
+
+    &.active {
+      .menu-icon {
+        transform: translate(0, -50%);
+        right: 1rem;
+      }
     }
   }
 
   &:hover {
     background-color: rgba($color-white, 0.15);
 
-    & > .menu {
+    & > .menu-icon {
       opacity: 1;
     }
 
-    & > .svg-container > svg {
+    & > .svg-container > span > svg {
       opacity: 1;
       stroke: $color-white;
     }
   }
 
-  .menu {
+  .menu-icon {
     position: absolute;
     top: 3px;
     right: 0;
     color: $color-gray-2;
-    transition: all 0.1s linear;
+    transition: all 0.15s ease-out;
 
     opacity: 0;
 
@@ -118,6 +160,7 @@ const stationNameCheck = computed(() => {
     height: 9.6rem;
     position: relative;
     svg {
+      transition: opacity 0.2s ease-in-out;
       width: 100%;
       height: 100%;
 
@@ -146,6 +189,10 @@ const stationNameCheck = computed(() => {
     height: 200%;
     background-color: $color-main;
     border-radius: 8px;
+  }
+
+  &--compact {
+    font-size: 2.4rem;
   }
 }
 </style>

@@ -2,23 +2,29 @@
   <section class="section-channels padding-10-x">
     <ChannelFilters />
 
-    <div class="channels">
-      <ChannelItem v-for="station in computedStations" :key="station.id" :station="station" />
+    <div :class="['channels', compact ? 'channels--compact' : '']">
+      <ChannelItem
+        :compact="compact"
+        v-for="station in computedStations"
+        :key="station.id"
+        :station="station"
+      />
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import { computed, watch } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import ChannelFilters from './Filters/ChannelFilters.vue'
 import ChannelItem from './ChannelItem.vue'
+import { useCompactView } from '@/store/store'
 
 import { stations } from '@/db'
 
 const route = useRoute()
 
-/* filter by theme */
+/* filter by theme or style */
 const computedStations = computed(() => {
   if (route.params.theme) {
     const theme = route.params.theme.slice(14).toString().toLowerCase()
@@ -40,6 +46,9 @@ const computedStations = computed(() => {
     })
   } else return stations
 })
+
+//compact view
+let compact = useCompactView()
 </script>
 
 <style lang="scss" scoped>
@@ -48,8 +57,13 @@ const computedStations = computed(() => {
     display: grid;
     grid-template-columns: repeat(9, 1fr);
     margin-top: 2.4rem;
-
     gap: 1.6rem;
+
+    &--compact {
+      grid-template-columns: repeat(3, 1fr);
+      column-gap: 4.8rem;
+      row-gap: 0.8rem;
+    }
   }
 }
 </style>
