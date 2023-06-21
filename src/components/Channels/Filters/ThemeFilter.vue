@@ -86,6 +86,7 @@ const selectedThemeIcon = computed(() => {
       let tagName = tag.name.toLowerCase()
       return tagName == selectedThemeName.value!.toLowerCase()
     })
+    //BUG when refresh page
     return selected[0].svg
   } else return null
 })

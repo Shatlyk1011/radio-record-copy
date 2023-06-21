@@ -1,11 +1,7 @@
 <template>
   <div class="sort-filter">
     <OnClickOutside @trigger="sortFilterBool = false">
-      <div
-        class="filter-wrap"
-        tabindex="0"
-        @click="sortFilterBool = !sortFilterBool"
-      >
+      <div class="filter-wrap" tabindex="0" @click="sortFilterBool = !sortFilterBool">
         <img src="@/assets/icons/up-down.svg" alt="up down arrow" />
       </div>
 
@@ -15,46 +11,26 @@
             <li>Сортировака</li>
             <li>
               Рекомендуемые
-              <img
-                src="@/assets/icons/check.svg"
-                alt="check icon"
-                v-if="true"
-              />
+              <img src="@/assets/icons/check.svg" alt="check icon" v-if="true" />
             </li>
             <li>
               По Алфавиту
-              <img
-                src="@/assets/icons/check.svg"
-                alt="check icon"
-                v-if="true"
-              />
+              <img src="@/assets/icons/check.svg" alt="check icon" v-if="true" />
             </li>
             <li>
               По новизне
-              <img
-                src="@/assets/icons/check.svg"
-                alt="check icon"
-                v-if="true"
-              />
+              <img src="@/assets/icons/check.svg" alt="check icon" v-if="true" />
             </li>
           </ul>
           <ul>
             <li>Вид</li>
-            <li>
+            <li @click=";(compact = false), (sortFilterBool = false)">
               Полный
-              <img
-                src="@/assets/icons/check.svg"
-                alt="check icon"
-                v-if="true"
-              />
+              <img v-if="!compact" src="@/assets/icons/check.svg" alt="check icon" v />
             </li>
-            <li>
+            <li @click=";(compact = true), (sortFilterBool = false)">
               Компактный
-              <img
-                src="@/assets/icons/check.svg"
-                alt="check icon"
-                v-if="true"
-              />
+              <img v-if="compact" src="@/assets/icons/check.svg" alt="check icon" />
             </li>
           </ul>
         </div>
@@ -66,8 +42,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { OnClickOutside } from '@vueuse/components'
+import { useCompactView } from '@/store/store'
 
 const sortFilterBool = ref(false)
+
+let compact = useCompactView()
 </script>
 
 <style lang="scss">
@@ -97,15 +76,17 @@ const sortFilterBool = ref(false)
     ul {
       display: flex;
       flex-direction: column;
-      gap: 2rem;
+      gap: 1.6rem;
       li {
         display: flex;
         align-items: center;
         justify-content: space-between;
         width: calc(20rem - 3.2rem);
-        line-height: 1.25;
+        line-height: 1.5;
         img {
           margin-left: auto;
+          // width: 100%;
+          box-sizing: border-box;
         }
 
         &:first-child {
