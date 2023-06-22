@@ -1,15 +1,14 @@
-import { ref, computed } from 'vue'
+import { ref, type Ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { SORT_BY_RECOMMEND, SORT_BY_ALPHABET, SORT_BY_NEW } from '@/store/store'
 
-import { stations } from '@/db'
 import type { IStation } from '@/assets/types'
 
 import { useStorageOrder } from '@/store/store'
 
 const { order } = useStorageOrder()
 
-const useStations = (stations: IStation[]) => {
+const useStations = (stations: Ref<IStation[]>) => {
   const route = useRoute()
 
   const orderBy = (a: IStation, b: IStation) => {
@@ -25,9 +24,9 @@ const useStations = (stations: IStation[]) => {
   }
 
   const computedStations = computed(() => {
-    if (route.params.theme) {
+    if (route.params.theme && stations.value) {
       const theme = route.params.theme.slice(14).toString().toLowerCase()
-      const filterByTheme = stations.filter((station) => {
+      const filterByTheme = stations.value.filter((station) => {
         const genres = station.genre
           .map((g) => g.name)
           .join()
@@ -35,9 +34,10 @@ const useStations = (stations: IStation[]) => {
         return genres.includes(theme)
       })
       return filterByTheme.sort(orderBy)
-    } else if (route.params.style) {
+      /*  */
+    } else if (route.params.style.length && stations.value) {
       const style = route.params.style.slice(14).toString().toLowerCase()
-      const filterByStyle = stations.filter((station) => {
+      const filterByStyle = stations.value.filter((station) => {
         const styles = station.genre
           .map((g) => g.name)
           .join()
@@ -45,7 +45,9 @@ const useStations = (stations: IStation[]) => {
         return styles.includes(style)
       })
       return filterByStyle.sort(orderBy)
-    } else return stations.sort(orderBy)
+      /*  */
+    } else if (stations.value) return stations.value
+    else return null
   })
 
   return { computedStations }

@@ -5,7 +5,7 @@
       <img src="@/assets/icons/heart.svg" alt="heart icon" />
       <span>Избранные</span>
     </div>
-    <StyleFilter :genres="genre" />
+    <StyleFilter :genres="genres" />
     <ThemeFilter :tags="tags" />
   </div>
 </template>
@@ -14,8 +14,9 @@
 import SortFilter from '@/components/Channels/Filters/SortFilter.vue'
 import StyleFilter from '@/components/Channels/Filters/StyleFilter.vue'
 import ThemeFilter from '@/components/Channels/Filters//ThemeFilter.vue'
+import getStations from '@/composables/getStations'
 
-import { tags, genre } from '@/db'
+const { tags, genres } = getStations()
 </script>
 
 <style lang="scss">
