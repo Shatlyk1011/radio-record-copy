@@ -75,7 +75,7 @@ const stationNameCheck = computed(() => {
   position: relative;
   cursor: pointer;
   position: relative;
-  padding: 0.8rem;
+  padding: 0.8rem !important;
   box-sizing: border-box;
 
   &.active {
@@ -172,7 +172,6 @@ const stationNameCheck = computed(() => {
     text-align: center;
     box-sizing: border-box;
     word-break: break-word;
-    padding: 0 5px;
     flex-grow: 1;
     line-height: 1.3;
   }
