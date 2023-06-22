@@ -57,6 +57,7 @@
     <audio
       :autoplay="autoplay"
       :onLoadstart="onLoadStart"
+      preload="auto"
       :onPlaying="() => (isWaiting = false)"
       :src="channel?.stream_128"
       ref="audio"
@@ -97,16 +98,16 @@ const handleVolume = (e: Event) => {
 
 const interval = setInterval(async () => {
   await getPlaylist(channel.value!.id)
-}, 5000)
+}, 7000)
 
 onMounted(async () => {
   await handleStation()
   //set default volume from local storage
   let localVolume = storage.getItem('volume')
   if (localVolume) {
-    let toInt = parseFloat(localVolume)
-    volume.value = toInt
-    range.value.value = toInt * 100
+    let volumeInt = parseFloat(localVolume)
+    volume.value = volumeInt
+    range.value.value = volumeInt * 100
   }
 })
 
