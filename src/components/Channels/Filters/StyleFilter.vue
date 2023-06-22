@@ -69,10 +69,8 @@ defineProps({
 const route = useRoute()
 
 const selectedStyleName = computed(() => {
-  if (route.params.style) {
-    let style = route.params.style.slice(14) as string
-    return style
-  } else return null
+  if (route.params.style) return route.params.style.slice(14) as string
+  else return null
 })
 
 const showStyleFilter = ref(false)

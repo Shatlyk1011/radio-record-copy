@@ -14,6 +14,11 @@ ul.lists {
   font-size: 5.6rem;
   font-weight: 900;
   color: $color-gray-2;
+
+  @include respond(tab-port) {
+    font-size: 4.8rem;
+    gap: 2.4rem;
+  }
   li {
     cursor: pointer;
     transition: all 0.1s linear;

@@ -1,5 +1,5 @@
 $ff-roboto: 'Roboto', sans-serif;
-
+$color-black: #000;
 $color-bg: rgb(20, 20, 20);
 $color-bg-2: rgb(42, 42, 42);
 $color-bg-3: rgb(61, 61, 61);
@@ -14,6 +14,34 @@ $color-text: rgb(235, 235, 235);
 $color-gray-1: rgb(168, 168, 168);
 $color-gray-2: rgb(122, 122, 122);
 $color-gray-3: rgb(91, 91, 91);
+
+@mixin respond($breakpoint) {
+  @if $breakpoint == smallest {
+    @media only screen and (max-width: 25em) {
+      @content;
+    } //400px
+  }
+  @if $breakpoint == phone {
+    @media only screen and (max-width: 37.5em) {
+      @content;
+    } //600px
+  }
+  @if $breakpoint == tab-port {
+    @media only screen and (max-width: 55em) {
+      @content;
+    } //880px
+  }
+  @if $breakpoint == tab-land {
+    @media only screen and (max-width: 78em) {
+      @content;
+    } //1248px
+  }
+  @if $breakpoint == big-desktop {
+    @media only screen and (min-width: 120em) {
+      @content;
+    } //1920px
+  }
+}
 
 *,
 *::before,
@@ -64,10 +92,16 @@ ul {
 
 .padding-10-x {
   padding: 0 4rem;
+  @include respond(tab-land) {
+    padding: 0 3rem;
+  }
 }
 
 .padding-10-y {
   padding: 4rem 0;
+  @include respond(tab-land) {
+    padding: 0 3rem;
+  }
 }
 
 .filter-enter-active,
@@ -79,32 +113,9 @@ ul {
 .filter-leave-to {
   transform: translateY(-5rem);
   opacity: 0;
-}
 
-/* @mixin respond($breakpoint) {
-  @if $breakpoint == smallest {
-    @media only screen and (max-width: 25em) {
-      @content;
-    } //400px
+  @include respond(tab-port) {
+    transform: translateY(40rem);
+    opacity: 1;
   }
-  @if $breakpoint == phone {
-    @media only screen and (max-width: 37.5em) {
-      @content;
-    } //600px
-  }
-  @if $breakpoint == tab-port {
-    @media only screen and (max-width: 50em) {
-      @content;
-    } //800px
-  }
-  @if $breakpoint == tab-land {
-    @media only screen and (max-width: 65em) {
-      @content;
-    } //1040px
-  }
-  @if $breakpoint == big-desktop {
-    @media only screen and (min-width: 120em) {
-      @content;
-    } //1920px
-  }
-} */
+}

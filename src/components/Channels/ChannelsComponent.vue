@@ -36,6 +36,7 @@ onMounted(async () => await getApi())
 </script>
 
 <style lang="scss" scoped>
+@import '@/globals';
 .section-channels {
   .channels {
     display: grid;
@@ -43,10 +44,24 @@ onMounted(async () => await getApi())
     margin-top: 2.4rem;
     gap: 1.6rem;
 
+    @include respond(tab-land) {
+      grid-template-columns: repeat(6, 1fr);
+    }
+    @include respond(tab-port) {
+      grid-template-columns: repeat(5, 1fr);
+    }
+
     &--compact {
       grid-template-columns: repeat(3, 1fr);
       column-gap: 4.8rem;
       row-gap: 0.8rem;
+
+      @include respond(tab-land) {
+        column-gap: 2.4rem;
+      }
+      @include respond(tab-port) {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
   }
 }
