@@ -16,8 +16,10 @@
         </svg>
       </div>
 
+      <div class="style-wrap--port">По стилям</div>
+
       <transition name="filter">
-        <div class="style-list" v-if="showStyleFilter">
+        <div class="style-list" v-if="showStyleFilter || showFilterPort">
           <ul>
             <router-link
               class="li"
@@ -63,6 +65,10 @@ defineProps({
   genres: {
     required: true,
     type: Array<IGenre>
+  },
+  showFilterPort: {
+    required: true,
+    type: Boolean
   }
 })
 
@@ -81,9 +87,12 @@ const showStyleFilter = ref(false)
 .style-filter {
   position: relative;
   width: 18rem;
-
   gap: 1rem;
   align-items: center;
+
+  @include respond(tab-port) {
+    width: 100%;
+  }
   .style-wrap {
     display: flex;
     width: 100%;
@@ -91,6 +100,10 @@ const showStyleFilter = ref(false)
     padding: 0.8rem 1.6rem;
     align-items: center;
     box-sizing: border-box;
+
+    @include respond(tab-port) {
+      display: none;
+    }
     p {
       margin-right: auto;
       font-weight: 600;
@@ -98,6 +111,16 @@ const showStyleFilter = ref(false)
 
     svg {
       transform: rotate(90deg);
+    }
+
+    &--port {
+      display: none;
+      @include respond(tab-port) {
+        display: block;
+        color: $color-gray-2;
+        padding-bottom: 0;
+        margin-bottom: 1.6rem;
+      }
     }
   }
 
@@ -110,9 +133,25 @@ const showStyleFilter = ref(false)
     border-radius: 0.8rem;
     box-sizing: border-box;
     z-index: 35;
+
+    @include respond(tab-port) {
+      padding: 0;
+      top: 0;
+      position: static;
+      display: flex;
+      background-color: transparent;
+    }
     ul {
       columns: 2;
       text-transform: capitalize;
+
+      @include respond(tab-port) {
+        columns: auto;
+        display: flex;
+        gap: 0.8rem;
+        flex-wrap: wrap;
+        margin-bottom: 2.4rem;
+      }
       .li {
         color: $color-text;
         text-decoration: none;
@@ -123,12 +162,22 @@ const showStyleFilter = ref(false)
         font-weight: 600;
         cursor: pointer;
         transition: all 0.1s linear;
+
+        @include respond(tab-port) {
+          padding: 6px 0.8rem;
+          background-color: $color-bg-2;
+          border-radius: 1.2rem;
+        }
         &:hover {
           color: $color-main;
         }
 
         &:not(:last-child) {
           margin-bottom: 1.6rem;
+
+          @include respond(tab-port) {
+            margin-bottom: 0;
+          }
         }
 
         span {
@@ -155,6 +204,10 @@ const showStyleFilter = ref(false)
     padding: 0.8rem 1.6rem;
     box-sizing: border-box;
     font-weight: 600;
+
+    @include respond(tab-port) {
+      display: none;
+    }
 
     .name {
       font-size: 1.6rem;

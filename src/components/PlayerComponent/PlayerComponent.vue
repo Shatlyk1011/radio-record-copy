@@ -1,6 +1,6 @@
 <template>
   <section class="section-player">
-    <div class="player" v-if="width > 880 || playing || autoplay">
+    <div class="player" v-if="width > 880">
       <div class="menu">
         <button type="button" @click="playing = !playing">
           <img src="@/assets/icons/pause.svg" alt="pause icon" v-if="playing && !isWaiting" />
@@ -54,8 +54,9 @@
         <input @input="handleVolume" class="range" type="range" min="0" max="100" ref="range" />
       </div>
     </div>
+
     <!-- COMPACT PLAYER -->
-    <div class="player-compact">
+    <div class="player-compact" v-if="(width <= 880 && playing) || (width <= 880 && autoplay)">
       <div class="player-compact__info">
         <button class="player-compact__btn" type="button" @click="playing = !playing">
           <img :src="playlist?.track.image100" alt="playlist img" />
@@ -170,7 +171,12 @@ onMounted(async () => {
 })
 
 onBeforeUnmount(() => clearInterval(interval))
-watch(playing, () => (isPlaying.value = playing.value))
+watch([playing, width], () => {
+  isPlaying.value = playing.value
+  if (width.value <= 880) {
+    volume.value = 1
+  }
+})
 </script>
 
 <style lang="scss" scoped>
@@ -182,7 +188,7 @@ watch(playing, () => (isPlaying.value = playing.value))
     display: flex;
     justify-content: space-between;
 
-    padding: 0.8rem;
+    padding: 0.8rem 2.4rem;
     .menu {
       display: flex;
       gap: 2rem;
