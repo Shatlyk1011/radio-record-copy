@@ -48,6 +48,10 @@ const switchComponent = ref(false)
   .wrap {
     transform: translateX(100%);
     transition: all 0.3s linear;
+
+    @include respond(tab-port) {
+      width: 100%;
+    }
   }
 
   &.bg {

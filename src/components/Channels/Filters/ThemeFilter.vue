@@ -212,6 +212,10 @@ const selectedThemeIcon = computed(() => {
     box-sizing: border-box;
     font-weight: 600;
 
+    @include respond(tab-port) {
+      display: none;
+    }
+
     .wrap {
       display: flex;
       align-items: center;
