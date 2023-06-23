@@ -15,7 +15,7 @@
 import { ref, watch } from 'vue'
 
 import MainNav from '@/components/MainNav.vue'
-import PlayerComponent from '@/components/PlayerComponent.vue'
+import PlayerComponent from '@/components/PlayerComponent/PlayerComponent.vue'
 import FooterComponent from '@/components/FooterComponent.vue'
 import AuthenticationComponent from '@/components/Auth/AuthenticationComponent.vue'
 
