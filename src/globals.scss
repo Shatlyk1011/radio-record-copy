@@ -119,3 +119,23 @@ ul {
     opacity: 1;
   }
 }
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0rem rgba($color-white, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 0 1.6rem rgba($color-white, 0);
+  }
+}
+
+@keyframes scale {
+  0% {
+    transform: translate(-50%, -50%) scale(0.9);
+    background-color: rgba($color-main, 0.25);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    background-color: rgba($color-main, 1);
+  }
+}

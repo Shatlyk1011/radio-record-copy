@@ -1,11 +1,11 @@
 <template>
   <section class="section-player">
-    <div class="player">
+    <div class="player" v-if="width > 880 || playing || autoplay">
       <div class="menu">
         <button type="button" @click="playing = !playing">
-          <img src="./../assets/icons/pause.svg" alt="pause icon" v-if="playing && !isWaiting" />
+          <img src="@/assets/icons/pause.svg" alt="pause icon" v-if="playing && !isWaiting" />
           <LoadingComponent v-if="isWaiting" />
-          <img src="./../assets/icons/play.svg" alt="pause icon" v-if="!playing && !isWaiting" />
+          <img src="@/assets/icons/play.svg" alt="pause icon" v-if="!playing && !isWaiting" />
         </button>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
           <path
@@ -49,10 +49,65 @@
       </div>
 
       <div class="volume">
-        <img src="./../assets/icons/volume.svg" alt="volume icon" v-if="!noSound" />
-        <img src="./../assets/icons/no-volume.svg" alt="no volume icon" v-else />
+        <img src="@/assets/icons/volume.svg" alt="volume icon" v-if="!noSound" />
+        <img src="@/assets/icons/no-volume.svg" alt="no volume icon" v-else />
         <input @input="handleVolume" class="range" type="range" min="0" max="100" ref="range" />
       </div>
+    </div>
+    <!-- COMPACT PLAYER -->
+    <div class="player-compact">
+      <div class="player-compact__info">
+        <button class="player-compact__btn" type="button" @click="playing = !playing">
+          <img :src="playlist?.track.image100" alt="playlist img" />
+
+          <div class="wrap-abs">
+            <img
+              v-if="playing && !isWaiting"
+              class="icon"
+              src="@/assets/icons/pause.svg"
+              alt="pause icon"
+            />
+
+            <LoadingComponent class="compact-loading" v-if="isWaiting" />
+            <img
+              v-if="!playing && !isWaiting"
+              class="icon"
+              src="@/assets/icons/play.svg"
+              alt="pause icon"
+            />
+          </div>
+        </button>
+        <div class="description">
+          <div class="title">{{ playlist?.track.artist }}</div>
+          <div class="subtitle">{{ playlist?.track.song }}</div>
+          <div class="station-name">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="12"
+              height="12"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M6.116 20.087C4.84003 19.1599 3.80182 17.9437 3.08639 16.538C2.37097 15.1324 1.99867 13.5772 2 12C2 6.477 6.477 2 12 2C17.523 2 22 6.477 22 12C22.0013 13.5772 21.629 15.1324 20.9136 16.538C20.1982 17.9437 19.16 19.1599 17.884 20.087L16.869 18.348C18.1954 17.3306 19.1698 15.9232 19.6552 14.3236C20.1407 12.724 20.1129 11.0125 19.5757 9.42947C19.0385 7.84648 18.0189 6.47153 16.6601 5.49776C15.3013 4.524 13.6717 4.00034 12 4.00034C10.3283 4.00034 8.69867 4.524 7.3399 5.49776C5.98114 6.47153 4.96154 7.84648 4.42434 9.42947C3.88714 11.0125 3.85932 12.724 4.34478 14.3236C4.83025 15.9232 5.80461 17.3306 7.131 18.348L6.116 20.087ZM8.15 16.602C7.20503 15.8114 6.52634 14.7491 6.20616 13.5594C5.88597 12.3696 5.9398 11.1102 6.36035 9.9521C6.78089 8.79403 7.54776 7.7935 8.55675 7.08644C9.56574 6.37939 10.7679 6.0001 12 6.0001C13.2321 6.0001 14.4343 6.37939 15.4433 7.08644C16.4523 7.7935 17.2191 8.79403 17.6397 9.9521C18.0602 11.1102 18.114 12.3696 17.7939 13.5594C17.4737 14.7491 16.795 15.8114 15.85 16.602L14.82 14.836C15.3818 14.2775 15.7651 13.5649 15.9214 12.7883C16.0777 12.0117 15.9998 11.2062 15.6978 10.4739C15.3957 9.74165 14.8831 9.11552 14.2248 8.67495C13.5664 8.23437 12.7921 7.99917 12 7.99917C11.2079 7.99917 10.4336 8.23437 9.77525 8.67495C9.11694 9.11552 8.60426 9.74165 8.30221 10.4739C8.00016 11.2062 7.92234 12.0117 8.07861 12.7883C8.23488 13.5649 8.61821 14.2775 9.18 14.836L8.15 16.602ZM11 13H13V22H11V13Z"
+              ></path>
+            </svg>
+            <p>{{ channel?.title }}</p>
+          </div>
+        </div>
+      </div>
+      <svg
+        class="menu-svg"
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        fill="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M12 20C11.45 20 10.9793 19.8043 10.588 19.413C10.196 19.021 10 18.55 10 18C10 17.45 10.196 16.979 10.588 16.587C10.9793 16.1957 11.45 16 12 16C12.55 16 13.021 16.1957 13.413 16.587C13.8043 16.979 14 17.45 14 18C14 18.55 13.8043 19.021 13.413 19.413C13.021 19.8043 12.55 20 12 20ZM12 14C11.45 14 10.9793 13.804 10.588 13.412C10.196 13.0207 10 12.55 10 12C10 11.45 10.196 10.979 10.588 10.587C10.9793 10.1957 11.45 10 12 10C12.55 10 13.021 10.1957 13.413 10.587C13.8043 10.979 14 11.45 14 12C14 12.55 13.8043 13.0207 13.413 13.412C13.021 13.804 12.55 14 12 14ZM12 8C11.45 8 10.9793 7.804 10.588 7.412C10.196 7.02067 10 6.55 10 6C10 5.45 10.196 4.97933 10.588 4.588C10.9793 4.196 11.45 4 12 4C12.55 4 13.021 4.196 13.413 4.588C13.8043 4.97933 14 5.45 14 6C14 6.55 13.8043 7.02067 13.413 7.412C13.021 7.804 12.55 8 12 8Z"
+        ></path>
+      </svg>
     </div>
     <audio
       :autoplay="autoplay"
@@ -69,6 +124,7 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useMediaControls } from '@vueuse/core'
+import { useWindowSize } from '@vueuse/core'
 
 import LoadingComponent from '@/components/shared/LoadingComponent.vue'
 
@@ -80,6 +136,7 @@ const range = ref()
 let storage = localStorage
 
 const { playing, volume } = useMediaControls(audio)
+const { width } = useWindowSize()
 
 const onLoadStart = () => {
   if (autoplay.value) isWaiting.value = true
@@ -104,9 +161,10 @@ onMounted(async () => {
   await handleStation()
   //set default volume from local storage
   let localVolume = storage.getItem('volume')
-  if (localVolume) {
+  if (localVolume && width.value > 880) {
     let volumeInt = parseFloat(localVolume)
     volume.value = volumeInt
+    console.log('volumeInt', volumeInt)
     range.value.value = volumeInt * 100
   }
 })
@@ -119,12 +177,12 @@ watch(playing, () => (isPlaying.value = playing.value))
 @import '@/globals';
 .section-player {
   z-index: 1000;
-
+  background-color: rgb(36, 36, 36);
   .player {
     display: flex;
     justify-content: space-between;
-    background-color: rgb(36, 36, 36);
-    padding: 6px 2.4rem;
+
+    padding: 0.8rem;
     .menu {
       display: flex;
       gap: 2rem;
@@ -327,25 +385,79 @@ watch(playing, () => (isPlaying.value = playing.value))
       }
     }
   }
-}
 
-@keyframes pulse {
-  0% {
-    box-shadow: 0 0 0 0rem rgba($color-white, 0.2);
-  }
-  100% {
-    box-shadow: 0 0 0 1.6rem rgba($color-white, 0);
-  }
-}
+  /* COMPACT PLAYER */
+  .player-compact {
+    background-color: rgb(36, 36, 36);
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(36, 36, 36);
+    padding: 6px 2.4rem;
+    border-top: 1px solid #3d3d3d;
+    border-bottom: 1px solid #3d3d3d;
+    &__info {
+      display: flex;
+      gap: 1rem;
+    }
+    &__btn {
+      all: unset;
+      max-width: 5.6rem;
+      border-radius: 1rem;
+      max-height: 5.6rem;
+      position: relative;
+      overflow: hidden;
+      img {
+        width: 100%;
+      }
 
-@keyframes scale {
-  0% {
-    transform: translate(-50%, -50%) scale(0.9);
-    background-color: rgba($color-main, 0.25);
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(1);
-    background-color: rgba($color-main, 1);
+      .wrap-abs {
+        z-index: 500;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba($color-black, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        .icon {
+          width: 2.4rem;
+        }
+
+        .compact-loading {
+          font-size: 3.2rem;
+        }
+      }
+    }
+
+    .description {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: $color-gray-2;
+
+      .title {
+        font-weight: 600;
+        color: $color-text;
+      }
+
+      .subtitle {
+        text-transform: uppercase;
+      }
+
+      .station-name {
+        display: flex;
+        align-items: center;
+        gap: 3px;
+        font-size: 1.2rem;
+      }
+    }
+    .menu-svg {
+      transform: rotate(90deg);
+      color: $color-gray-2;
+    }
   }
 }
 </style>

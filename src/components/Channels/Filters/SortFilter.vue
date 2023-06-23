@@ -149,9 +149,7 @@ const { order, orderByRecommend, orderByAlphabet, orderByNew } = useStorageOrder
 
   @include respond(tab-port) {
     position: static;
-  }
 
-  @include respond(tab-land) {
     &.layer {
       &::before {
         content: '';
@@ -200,7 +198,7 @@ const { order, orderByRecommend, orderByAlphabet, orderByNew } = useStorageOrder
     .filter-wrap-nav {
       display: none;
 
-      @include respond(tab-land) {
+      @include respond(tab-port) {
         display: flex;
         justify-content: space-between;
         color: $color-text;
@@ -218,20 +216,6 @@ const { order, orderByRecommend, orderByAlphabet, orderByNew } = useStorageOrder
         background-color: $color-bg-2;
         padding: 1.6rem 1.2rem;
         border-radius: 8px;
-
-        /*         &:before {
-          content: '';
-          width: 100%;
-          height: 120vh;
-          background-color: rgba($color-bg-2, 0.7);
-          z-index: 200;
-          position: fixed;
-          top: 0;
-          left: 0;
-          z-index: -1;
-          // top: -130%;
-          user-select: none;
-        } */
       }
       li {
         display: flex;

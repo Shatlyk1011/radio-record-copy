@@ -1,5 +1,5 @@
 <template>
-  <div class="slider-component padding-10-x">
+  <div class="slider-component padding-10-x" v-once>
     <swiper
       class="wrap"
       :modules="[Navigation]"
