@@ -3,7 +3,7 @@
     <swiper
       class="wrap"
       :modules="[Navigation]"
-      :space-between="16"
+      :space-between="width <= 880 ? 8 : 16"
       :slides-per-view="'auto'"
       :navigation="{ prevEl: '.prevEl', nextEl: '.nextEl' }"
     >
@@ -26,11 +26,14 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { Navigation } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
 import 'swiper/css/navigation'
+import { useWindowSize } from '@vueuse/core'
+
+const { width } = useWindowSize()
 
 const slides = [
   {
@@ -81,6 +84,12 @@ const slides = [
       overflow: hidden;
       background: rgb(229, 229, 229);
       background: linear-gradient(180deg, rgba(229, 229, 229, 1) 0%, rgba(37, 37, 37, 1) 100%);
+      overflow: hidden;
+
+      @include respond(tab-port) {
+        flex-basis: 28rem;
+        max-height: 14rem;
+      }
 
       &:before {
         content: '';

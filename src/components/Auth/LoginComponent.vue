@@ -75,6 +75,10 @@ const emitChangeView = () => emit('changeView')
   width: 52rem;
   height: 100%;
 
+  @include respond(tab-port) {
+    width: 100%;
+  }
+
   .top {
     padding: 1.6rem;
     padding-left: 3.2rem;

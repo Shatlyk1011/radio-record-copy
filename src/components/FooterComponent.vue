@@ -103,6 +103,10 @@
   display: flex;
   flex-direction: column;
 
+  @include respond(tab-land) {
+    padding-bottom: 16rem;
+  }
+
   .footer-top {
     border-top: 1px solid rgba($color-gray-3, 0.5);
     display: flex;
@@ -130,10 +134,9 @@
 
         gap: 1.5rem;
         @include respond(tab-port) {
-        }
-
-        &.basis-50 {
-          @include respond(tab-port) {
+          max-width: 12rem;
+          &:last-child {
+            margin-top: -3.8rem;
           }
         }
 
@@ -214,12 +217,25 @@
     border-top: 1px solid rgba($color-gray-3, 0.5);
     padding-top: 2.4rem;
     padding-bottom: 2.4rem;
+
+    @include respond(tab-land) {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 1.2rem;
+    }
     .copyright {
     }
 
     .agreements {
       display: flex;
       gap: 3rem;
+      @include respond(tab-land) {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1.2rem;
+      }
       p {
         cursor: pointer;
         transition: all 0.15s linear;

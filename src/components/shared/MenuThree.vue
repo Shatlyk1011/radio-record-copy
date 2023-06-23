@@ -16,12 +16,18 @@ ul.lists {
   color: $color-gray-2;
 
   @include respond(tab-port) {
-    font-size: 4.8rem;
+    font-size: 3.2rem;
     gap: 2.4rem;
   }
   li {
     cursor: pointer;
     transition: all 0.1s linear;
+
+    @include respond(tab-port) {
+      &:not(:first-child) {
+        display: none;
+      }
+    }
 
     &.active,
     &:focus {

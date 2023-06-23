@@ -19,7 +19,7 @@ import PlayerComponent from '@/components/PlayerComponent/PlayerComponent.vue'
 import FooterComponent from '@/components/FooterComponent.vue'
 import AuthenticationComponent from '@/components/Auth/AuthenticationComponent.vue'
 
-const showSidebar = ref(false)
+const showSidebar = ref(true)
 
 const body = document.querySelector('body')
 
@@ -31,7 +31,7 @@ watch(showSidebar, () => {
 
 <style lang="scss">
 .app {
-  // padding-top: 12rem;
+  padding-top: 12rem;
   position: relative;
 }
 

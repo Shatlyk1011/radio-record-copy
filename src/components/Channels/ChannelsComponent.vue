@@ -14,11 +14,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, watch } from 'vue'
+import { computed, onMounted } from 'vue'
 import ChannelFilters from './Filters/ChannelFilters.vue'
 import ChannelItem from './ChannelItem.vue'
 import { useStorageCompact } from '@/store/store'
-import type { IStation } from '@/assets/types'
 
 import useStations from '@/composables/useStations'
 import getStations from '@/composables/getStations'
@@ -45,9 +44,11 @@ onMounted(async () => await getApi())
 
     @include respond(tab-land) {
       grid-template-columns: repeat(6, 1fr);
+      gap: 1.4rem;
     }
     @include respond(tab-port) {
       grid-template-columns: repeat(5, 1fr);
+      gap: 1.2rem;
     }
 
     &--compact {

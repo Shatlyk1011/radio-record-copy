@@ -64,6 +64,13 @@ const { tags, genres } = getStations()
 
 const showFilterPort = ref(false)
 
+const body = document.querySelector('body')
+
+watch(showFilterPort, () => {
+  if (showFilterPort.value == true) body?.classList.add('overflow')
+  else body?.classList.remove('overflow')
+})
+
 watch(width, () => {
   if (width.value > 880) {
     showFilterPort.value = false

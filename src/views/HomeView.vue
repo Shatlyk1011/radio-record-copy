@@ -16,7 +16,12 @@ import ChannelsComponent from '@/components/Channels/ChannelsComponent.vue'
 </script>
 
 <style lang="scss" scoped>
+@import '@/globals';
 .wrap {
   margin: 4.8rem 0 3.2rem;
+
+  @include respond(tab-port) {
+    margin: 2rem 0;
+  }
 }
 </style>
