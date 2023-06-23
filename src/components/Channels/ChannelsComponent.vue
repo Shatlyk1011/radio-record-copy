@@ -14,14 +14,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, watch } from 'vue'
 import ChannelFilters from './Filters/ChannelFilters.vue'
 import ChannelItem from './ChannelItem.vue'
 import { useStorageCompact } from '@/store/store'
 import type { IStation } from '@/assets/types'
 
 import useStations from '@/composables/useStations'
-
 import getStations from '@/composables/getStations'
 
 const { stations, getApi } = getStations()

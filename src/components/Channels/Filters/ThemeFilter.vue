@@ -16,8 +16,10 @@
         </svg>
       </div>
 
+      <div class="theme-wrap--port">По темам</div>
+
       <transition name="filter">
-        <div class="theme-list" v-if="showThemeFilter">
+        <div class="theme-list" v-if="showThemeFilter || showFilterPort">
           <ul>
             <router-link
               class="li"
@@ -67,6 +69,10 @@ const props = defineProps({
   tags: {
     type: Array as PropType<ITag[]>,
     required: true
+  },
+  showFilterPort: {
+    required: true,
+    type: Boolean
   }
 })
 
@@ -97,9 +103,12 @@ const selectedThemeIcon = computed(() => {
 .theme-filter {
   position: relative;
   width: 18rem;
-
   gap: 1rem;
   align-items: center;
+
+  @include respond(tab-port) {
+    width: 100%;
+  }
   .theme-wrap {
     display: flex;
     width: 100%;
@@ -107,6 +116,10 @@ const selectedThemeIcon = computed(() => {
     padding: 0.8rem 1.6rem;
     align-items: center;
     box-sizing: border-box;
+
+    @include respond(tab-port) {
+      display: none;
+    }
     p {
       margin-right: auto;
       font-weight: 600;
@@ -114,6 +127,15 @@ const selectedThemeIcon = computed(() => {
 
     svg {
       transform: rotate(90deg);
+    }
+
+    &--port {
+      display: none;
+      @include respond(tab-port) {
+        display: block;
+        color: $color-gray-2;
+        margin-bottom: 1.6rem;
+      }
     }
   }
 
@@ -128,11 +150,27 @@ const selectedThemeIcon = computed(() => {
     box-sizing: border-box;
     z-index: 35;
 
+    @include respond(tab-port) {
+      padding: 0;
+      top: 0;
+      position: static;
+      display: flex;
+      background-color: transparent;
+    }
+
     ul {
       display: flex;
       flex-direction: column;
       gap: 1.6rem;
       text-transform: capitalize;
+
+      @include respond(tab-port) {
+        flex-direction: row;
+        columns: auto;
+        display: flex;
+        gap: 0.8rem;
+        flex-wrap: wrap;
+      }
       .li {
         color: $color-text;
         text-decoration: none;
@@ -142,6 +180,12 @@ const selectedThemeIcon = computed(() => {
         font-weight: 600;
         cursor: pointer;
         transition: all 0.1s linear;
+
+        @include respond(tab-port) {
+          padding: 2px 1.2rem 2px 4px;
+          border: 1px solid $color-gray-2;
+          border-radius: 1.6rem;
+        }
         &:hover {
           color: $color-main;
         }

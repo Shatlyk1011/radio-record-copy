@@ -2,6 +2,7 @@
   <div :class="['auth', showSidebar ? 'bg' : '']">
     <OnClickOutside class="wrap" @trigger="emitCloseSidebar">
       <component
+        @close="emitCloseSidebar"
         @changeView="switchComponent = !switchComponent"
         :is="switchComponent ? LoginComponent : RegisterComponent"
       >
