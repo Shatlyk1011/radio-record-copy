@@ -52,7 +52,7 @@
               </svg>
             </li>
             <li @click="orderByAlphabet">
-              По Алфавиту
+              По алфавиту
               <svg
                 v-if="order == SORT_BY_ALPHABET"
                 xmlns="http://www.w3.org/2000/svg"
@@ -192,7 +192,7 @@ watch(sortFilterBool, () => {
       position: fixed;
       top: auto;
       bottom: 0;
-      z-index: 1005;
+      z-index: 2005;
       width: 100%;
       box-sizing: border-box;
       flex-direction: column;

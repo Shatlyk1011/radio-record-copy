@@ -91,6 +91,11 @@ const slides = [
         max-height: 14rem;
       }
 
+      @include respond(phone) {
+        flex-basis: 28rem;
+        max-height: 14rem;
+      }
+
       &:before {
         content: '';
         position: absolute;
@@ -116,6 +121,10 @@ const slides = [
         font-size: 1.8rem;
         font-weight: 600;
         line-height: 1.2;
+
+        @include respond(tab-port) {
+          font-size: 1.6rem;
+        }
       }
     }
   }

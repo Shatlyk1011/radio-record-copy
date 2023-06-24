@@ -182,7 +182,7 @@ watch([playing, width], () => {
 <style lang="scss" scoped>
 @import '@/globals';
 .section-player {
-  z-index: 1000;
+  z-index: 998;
   background-color: rgb(36, 36, 36);
   .player {
     display: flex;
@@ -398,9 +398,13 @@ watch([playing, width], () => {
     display: flex;
     justify-content: space-between;
     background-color: rgb(36, 36, 36);
-    padding: 6px 2.4rem;
+    padding: 1rem 2.4rem;
     border-top: 1px solid #3d3d3d;
     border-bottom: 1px solid #3d3d3d;
+
+    @include respond(phone) {
+      padding: 1rem 1.6rem;
+    }
     &__info {
       display: flex;
       gap: 1rem;
@@ -444,6 +448,10 @@ watch([playing, width], () => {
       justify-content: space-between;
       color: $color-gray-2;
 
+      @include respond(phone) {
+        font-size: 1.4rem;
+      }
+
       .title {
         font-weight: 600;
         color: $color-text;
@@ -463,6 +471,7 @@ watch([playing, width], () => {
     .menu-svg {
       transform: rotate(90deg);
       color: $color-gray-2;
+      align-self: center;
     }
   }
 }

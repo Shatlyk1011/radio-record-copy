@@ -78,6 +78,10 @@ const stationNameCheck = computed(() => {
   padding: 0.8rem !important;
   box-sizing: border-box;
 
+  @include respond(tab-port) {
+    height: 14rem;
+  }
+
   &.active {
     background-color: $color-main;
 
@@ -158,6 +162,11 @@ const stationNameCheck = computed(() => {
     width: 9.6rem;
     height: 9.6rem;
     position: relative;
+
+    @include respond(tab-port) {
+      width: 8rem;
+      height: 8rem;
+    }
     svg {
       transition: opacity 0.2s ease-in-out;
       width: 100%;
@@ -174,6 +183,10 @@ const stationNameCheck = computed(() => {
     word-break: break-word;
     flex-grow: 1;
     line-height: 1.3;
+
+    @include respond(tab-port) {
+      font-size: 1.4rem;
+    }
   }
 }
 
