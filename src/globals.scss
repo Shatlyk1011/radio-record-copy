@@ -22,9 +22,9 @@ $color-gray-3: rgb(91, 91, 91);
     } //400px
   }
   @if $breakpoint == phone {
-    @media only screen and (max-width: 37.5em) {
+    @media only screen and (max-width: 43.75em) {
       @content;
-    } //600px
+    } //700px
   }
   @if $breakpoint == tab-port {
     @media only screen and (max-width: 55em) {
@@ -55,6 +55,10 @@ html {
   font-size: 62.5%;
   box-sizing: border-box;
   font-family: $ff-roboto;
+
+  @include respond(phone) {
+    font-size: 50%;
+  }
 }
 
 body {
@@ -98,6 +102,9 @@ ul {
   @include respond(tab-port) {
     padding: 0 1.6rem;
   }
+  @include respond(phone) {
+    padding: 0 1.2rem;
+  }
 }
 
 .padding-10-y {
@@ -107,6 +114,9 @@ ul {
   }
   @include respond(tab-port) {
     padding: 0 1.6rem;
+  }
+  @include respond(phone) {
+    padding: 0 1.2rem;
   }
 }
 

@@ -36,19 +36,28 @@ onMounted(async () => await getApi())
 <style lang="scss" scoped>
 @import '@/globals';
 .section-channels {
+  box-sizing: border-box;
   .channels {
     display: grid;
     grid-template-columns: repeat(9, 1fr);
     margin-top: 2.4rem;
     gap: 1.6rem;
-
     @include respond(tab-land) {
-      grid-template-columns: repeat(6, 1fr);
+      grid-template-columns: repeat(7, 1fr);
       gap: 1.4rem;
     }
     @include respond(tab-port) {
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(6, 1fr);
       gap: 1.2rem;
+    }
+
+    @include respond(phone) {
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem;
+    }
+
+    @include respond(smallest) {
+      grid-template-columns: repeat(3, 1fr);
     }
 
     &--compact {

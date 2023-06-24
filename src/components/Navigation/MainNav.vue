@@ -107,7 +107,7 @@
     </div>
 
     <transition name="nav-transition">
-      <nav class="nav" v-if="navBool">
+      <nav class="nav" v-if="navBool || showMenu">
         <div class="nav-logo">
           <svg class="icon-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144 46">
             <path
@@ -133,7 +133,7 @@
         </div>
 
         <div class="middle">
-          <MenuThree />
+          <MenuThree class="menu-three" />
 
           <div class="menu">
             <ul>
@@ -173,6 +173,14 @@ import MenuThree from '@/components/shared/MenuThree.vue'
 
 import { OnClickOutside } from '@vueuse/components'
 import { useWindowSize } from '@vueuse/core'
+
+defineProps({
+  showMenu: {
+    required: true,
+    type: Boolean,
+    default: false
+  }
+})
 
 const { width } = useWindowSize()
 
@@ -318,12 +326,20 @@ header {
     display: flex;
     flex-direction: column;
 
+    @include respond(tab-port) {
+      height: 300vh;
+    }
+
     .nav-logo {
       display: flex;
       justify-content: space-between;
       align-items: center;
       width: max-width;
       box-sizing: content-box;
+
+      @include respond(tab-port) {
+        justify-content: center;
+      }
 
       .icon-1 {
         width: 112px;
@@ -332,6 +348,10 @@ header {
       .icon-2 {
         width: 4rem;
         cursor: pointer;
+
+        @include respond(tab-port) {
+          display: none;
+        }
       }
     }
 
@@ -340,10 +360,24 @@ header {
       flex-direction: column;
       gap: 3.2rem;
       margin: 14rem auto 0;
+      @include respond(tab-port) {
+        margin: 2rem auto;
+      }
+
+      .menu-three {
+        @include respond(tab-port) {
+          display: none;
+        }
+      }
 
       .menu {
         display: flex;
         gap: 4.8rem;
+
+        @include respond(tab-port) {
+          flex-direction: column;
+          gap: 1.6rem;
+        }
         ul {
           display: flex;
           flex-direction: column;
@@ -354,6 +388,10 @@ header {
           width: max-content;
           li {
             line-height: 1.4;
+
+            @include respond(tab-port) {
+              max-width: 11rem;
+            }
             &:hover {
               color: $color-text;
             }

@@ -1,27 +1,39 @@
 <template>
   <div class="app">
     <div class="container">
-      <MainNav @showSidebar="showSidebar = true" />
+      <MainNav @showSidebar="showSidebar = true" :showMenu="showMenu" />
       <router-view />
       <FooterComponent />
     </div>
     <AuthenticationComponent :showSidebar="showSidebar" @closeSidebar="showSidebar = false" />
-    <!-- v-if="showSidebar" -->
-    <PlayerComponent class="player-component" />
+    <div class="player-component">
+      <PlayerComponent />
+      <SecondNav v-if="showSecondNav" @showMenu="showMenu = !showMenu" />
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
+import { useWindowSize } from '@vueuse/core'
 
-import MainNav from '@/components/MainNav.vue'
+import MainNav from '@/components/Navigation/MainNav.vue'
+import SecondNav from '@/components/Navigation/SecondNav.vue'
 import PlayerComponent from '@/components/PlayerComponent/PlayerComponent.vue'
 import FooterComponent from '@/components/FooterComponent.vue'
 import AuthenticationComponent from '@/components/Auth/AuthenticationComponent.vue'
 
-const showSidebar = ref(true)
+const { width } = useWindowSize()
+
+const showSidebar = ref(false)
+const showMenu = ref(false)
 
 const body = document.querySelector('body')
+
+const showSecondNav = computed(() => {
+  if (width.value < 880) return true
+  else return false
+})
 
 watch(showSidebar, () => {
   if (showSidebar.value == true) body?.classList.add('overflow')
@@ -37,7 +49,8 @@ watch(showSidebar, () => {
 
 .player-component {
   position: fixed;
-  bottom: 0;
   width: 100%;
+  bottom: 0;
+  z-index: 1600;
 }
 </style>
