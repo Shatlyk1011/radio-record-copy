@@ -5,6 +5,7 @@
     :class="[
       'item',
       stationNameCheck && isPlaying ? 'active' : null,
+      stationNameCheck && isWaiting ? 'active' : null,
       compactVal ? 'item--compact' : null
     ]"
     @click="handleStation(station)"

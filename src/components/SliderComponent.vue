@@ -1,9 +1,9 @@
 <template>
-  <div class="slider-component padding-10-x" v-once>
+  <div class="slider-component padding-10-x">
     <swiper
       class="wrap"
       :modules="[Navigation]"
-      :space-between="width <= 880 ? 8 : 16"
+      :space-between="gap"
       :slides-per-view="'auto'"
       :navigation="{ prevEl: '.prevEl', nextEl: '.nextEl' }"
     >
@@ -27,6 +27,7 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import { Navigation } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
@@ -34,6 +35,12 @@ import 'swiper/css/navigation'
 import { useWindowSize } from '@vueuse/core'
 
 const { width } = useWindowSize()
+
+const gap = computed(() => {
+  if (width.value <= 880 && width.value > 700) return 8
+  else if (width.value <= 700) return 6
+  else return 16
+})
 
 const slides = [
   {
