@@ -17,6 +17,7 @@
 
 <style lang="scss">
 .spinner {
+  user-select: none;
   font-size: 40px;
   position: relative;
   display: inline-block;

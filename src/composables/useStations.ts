@@ -12,7 +12,6 @@ const useStations = (stations: Ref<IStation[]>) => {
   const route = useRoute()
 
   const orderBy = (a: IStation, b: IStation) => {
-    console.log('run orderBy')
     if (order.value == SORT_BY_ALPHABET) {
       if (a.title < b.title) return -1
       if (a.title > b.title) return 1
