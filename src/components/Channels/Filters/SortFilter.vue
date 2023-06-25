@@ -130,6 +130,9 @@ import { ref, watch } from 'vue'
 import { OnClickOutside } from '@vueuse/components'
 import { useStorageCompact, useStorageOrder } from '@/store/store'
 import { SORT_BY_RECOMMEND, SORT_BY_ALPHABET, SORT_BY_NEW } from '@/store/store'
+import { useWindowSize } from '@vueuse/core'
+
+const { width } = useWindowSize()
 
 const sortFilterBool = ref(false)
 
@@ -140,7 +143,7 @@ const { order, orderByRecommend, orderByAlphabet, orderByNew } = useStorageOrder
 const body = document.querySelector('body')
 
 watch(sortFilterBool, () => {
-  if (sortFilterBool.value == true) body?.classList.add('overflow')
+  if (sortFilterBool.value && width.value < 920) body?.classList.add('overflow')
   else body?.classList.remove('overflow')
 })
 </script>

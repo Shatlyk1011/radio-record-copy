@@ -1,9 +1,10 @@
 <template>
   <section class="section-player">
-    <div class="player" v-if="width > 880">
+    <div class="player" v-if="width > 920">
       <div class="menu">
-        <button type="button" @click="playing = !playing">
+        <button type="button" :class="playing ? 'active ' : null">
           <svg
+            @click="playing = false"
             class="action-svg"
             v-if="playing && !isWaiting"
             xmlns="http://www.w3.org/2000/svg"
@@ -18,6 +19,7 @@
           </svg>
           <LoadingComponent v-if="isWaiting" />
           <svg
+            @click="playing = true"
             class="action-svg"
             v-if="!playing && !isWaiting"
             xmlns="http://www.w3.org/2000/svg"
@@ -108,13 +110,14 @@
     </div>
 
     <!-- COMPACT PLAYER -->
-    <div class="player-compact" v-if="(width <= 880 && playing) || (width <= 880 && autoplay)">
+    <div class="player-compact" v-if="(width <= 920 && playing) || (width <= 920 && autoplay)">
       <div class="player-compact__info">
         <button class="player-compact__btn" type="button" @click="playing = !playing">
           <img :src="playlist?.track.image100" alt="playlist img" />
 
           <div class="wrap-abs">
             <svg
+              @click="playing = false"
               v-if="playing && !isWaiting"
               class="icon"
               xmlns="http://www.w3.org/2000/svg"
@@ -130,6 +133,7 @@
 
             <LoadingComponent class="compact-loading" v-if="isWaiting" />
             <svg
+              @click="playing = true"
               v-if="!playing && !isWaiting"
               class="icon"
               xmlns="http://www.w3.org/2000/svg"
@@ -200,7 +204,6 @@ import useStation from '@/composables/useStation'
 const audio = ref()
 const noSound = ref(false)
 const range = ref()
-let storage = localStorage
 
 const { playing, volume } = useMediaControls(audio)
 const { width } = useWindowSize()
@@ -215,9 +218,9 @@ const { channel, playlist, getPlaylist, handleStation, isPlaying, isWaiting, aut
 const handleVolume = (e: Event) => {
   const val = parseFloat((e.target as HTMLInputElement).value) / 100
   volume.value = val
-  storage.setItem('volume', val + '')
+  localStorage.setItem('volume', val + '')
   //change icon if no volume
-  val == 0 ? (noSound.value = true) : (noSound.value = false)
+  val === 0 ? (noSound.value = true) : (noSound.value = false)
 }
 
 const interval = setInterval(async () => {
@@ -226,12 +229,11 @@ const interval = setInterval(async () => {
 
 onMounted(async () => {
   await handleStation()
-  //set default volume from local storage
-  let localVolume = storage.getItem('volume')
-  if (localVolume && width.value > 880) {
+  //set default volume from localStorage
+  let localVolume = localStorage.getItem('volume')
+  if (localVolume && width.value > 920) {
     let volumeInt = parseFloat(localVolume)
     volume.value = volumeInt
-    console.log('volumeInt', volumeInt)
     range.value.value = volumeInt * 100
   }
 })
@@ -239,7 +241,7 @@ onMounted(async () => {
 onBeforeUnmount(() => clearInterval(interval))
 watch([playing, width], () => {
   isPlaying.value = playing.value
-  if (width.value <= 880) {
+  if (width.value <= 920) {
     volume.value = 1
   }
 })
@@ -295,12 +297,12 @@ watch([playing, width], () => {
           border-radius: 100%;
         }
 
-        &::before {
+        &.active::before {
           content: '';
           animation: pulse 1.4s ease-in-out infinite;
           position: absolute;
           border-radius: 100%;
-          z-index: 31000;
+          z-index: 1100;
           width: 100%;
           height: 100%;
           top: 0;
@@ -310,7 +312,7 @@ watch([playing, width], () => {
         .action-svg {
           display: inline-block;
           fill: $color-text;
-          z-index: 200;
+          z-index: 1101;
         }
       }
       .menu-svg {
@@ -417,13 +419,13 @@ watch([playing, width], () => {
       input[type='range']::-webkit-slider-runnable-track {
         background-color: $color-white;
         border-radius: 1rem;
-        height: 4px;
+        height: 2px;
       }
 
       input[type='range']::-webkit-slider-thumb {
         -webkit-appearance: none;
         appearance: none;
-        margin-top: -5px;
+        margin-top: -6px;
 
         background-color: $color-text;
         height: 1.5rem;
@@ -436,24 +438,18 @@ watch([playing, width], () => {
       input[type='range']::-moz-range-track {
         background-color: $color-white;
         border-radius: 1rem;
-        height: 4px;
+        height: 2px;
       }
 
       input[type='range']::-moz-range-thumb {
         -webkit-appearance: none;
         appearance: none;
-        margin-top: -5px;
+        margin-top: -6px;
 
         background-color: $color-text;
         height: 1.5rem;
         width: 1.5rem;
         border-radius: 100%;
-      }
-
-      input[type='range']:focus::-moz-range-thumb {
-        background-color: $color-white;
-        border-radius: 0.5rem;
-        height: 0.5rem;
       }
     }
   }

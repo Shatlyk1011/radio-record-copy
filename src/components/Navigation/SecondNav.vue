@@ -44,7 +44,7 @@
         </svg>
         <p>События</p>
       </li>
-      <li>
+      <li @click="emitShowSidebar">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="currentColor"
@@ -76,7 +76,7 @@
 </template>
 
 <script setup lang="ts">
-const emit = defineEmits(['showMenu'])
+const emit = defineEmits(['showMenu', 'showSidebar'])
 
 const emitShowMenu = () => {
   emit('showMenu')
@@ -84,6 +84,8 @@ const emitShowMenu = () => {
     top: 0
   })
 }
+
+const emitShowSidebar = () => emit('showSidebar')
 </script>
 
 <style lang="scss" scoped>

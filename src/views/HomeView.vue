@@ -4,13 +4,12 @@
     <div class="wrap padding-10-x">
       <MenuThree />
     </div>
-
     <ChannelsComponent />
   </main>
 </template>
 
 <script setup lang="ts">
-import SliderComponent from '@/components/SliderComponent.vue'
+import SliderComponent from '@/components/shared/SliderComponent.vue'
 import MenuThree from '@/components/shared/MenuThree.vue'
 import ChannelsComponent from '@/components/Channels/ChannelsComponent.vue'
 </script>

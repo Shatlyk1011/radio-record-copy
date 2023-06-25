@@ -64,11 +64,11 @@ import { ref, type PropType, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { OnClickOutside } from '@vueuse/components'
 import type { ITag } from '@/assets/types'
+import { useWindowSize } from '@vueuse/core'
 
 const props = defineProps({
   tags: {
-    type: Array as PropType<ITag[]>,
-    required: true
+    type: Array as PropType<ITag[]>
   },
   showFilterPort: {
     required: true,
@@ -76,6 +76,7 @@ const props = defineProps({
   }
 })
 
+const { width } = useWindowSize()
 const route = useRoute()
 const showThemeFilter = ref(false)
 
@@ -87,12 +88,11 @@ const selectedThemeName = computed(() => {
 })
 
 const selectedThemeIcon = computed(() => {
-  if (route.params.theme && selectedThemeName.value) {
+  if (route.params.theme && props.tags && width.value > 920) {
     let selected = props.tags.filter((tag) => {
       let tagName = tag.name.toLowerCase()
       return tagName == selectedThemeName.value!.toLowerCase()
     })
-    //BUG when refresh page
     return selected[0].svg
   } else return null
 })
@@ -163,6 +163,7 @@ const selectedThemeIcon = computed(() => {
       flex-direction: column;
       gap: 1.6rem;
       text-transform: capitalize;
+      user-select: none;
 
       @include respond(tab-port) {
         flex-direction: row;

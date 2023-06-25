@@ -8,7 +8,11 @@
     <AuthenticationComponent :showSidebar="showSidebar" @closeSidebar="showSidebar = false" />
     <div class="player-component">
       <PlayerComponent />
-      <SecondNav v-if="showSecondNav" @showMenu="showMenu = !showMenu" />
+      <SecondNav
+        v-if="showSecondNav"
+        @showMenu="showMenu = !showMenu"
+        @showSidebar="showSidebar = true"
+      />
     </div>
   </div>
 </template>
@@ -20,7 +24,7 @@ import { useWindowSize } from '@vueuse/core'
 import MainNav from '@/components/Navigation/MainNav.vue'
 import SecondNav from '@/components/Navigation/SecondNav.vue'
 import PlayerComponent from '@/components/PlayerComponent/PlayerComponent.vue'
-import FooterComponent from '@/components/FooterComponent.vue'
+import FooterComponent from '@/components/Navigation/FooterComponent.vue'
 import AuthenticationComponent from '@/components/Auth/AuthenticationComponent.vue'
 
 const { width } = useWindowSize()
@@ -31,7 +35,7 @@ const showMenu = ref(false)
 const body = document.querySelector('body')
 
 const showSecondNav = computed(() => {
-  if (width.value < 880) return true
+  if (width.value < 920) return true
   else return false
 })
 

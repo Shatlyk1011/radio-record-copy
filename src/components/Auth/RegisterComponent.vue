@@ -26,6 +26,7 @@
           </svg>
         </div>
       </div>
+
       <span class="or">или</span>
 
       <form>
@@ -126,8 +127,11 @@ const emitChangeView = () => emit('changeView')
     display: flex;
     flex-direction: column;
     align-items: center;
-
     padding: 4.8rem 8rem;
+
+    @include respond(smallest) {
+      padding: 4.8rem 4rem;
+    }
 
     .help {
       font-size: 1.4rem;
