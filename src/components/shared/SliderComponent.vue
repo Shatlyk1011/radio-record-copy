@@ -17,58 +17,33 @@
 
     <div class="btns">
       <button class="prevEl">
-        <img src="./../assets/icons/arrow.svg" alt="arrow-left" />
+        <img src="@/assets/icons/arrow.svg" alt="arrow-left" />
       </button>
       <button class="nextEl">
-        <img src="./../assets/icons/arrow.svg" alt="arrow-right" />
+        <img src="@/assets/icons/arrow.svg" alt="arrow-right" />
       </button>
     </div>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue'
 import { Navigation } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
 import 'swiper/css/navigation'
+
+import { slides } from '@/store/store'
+
 import { useWindowSize } from '@vueuse/core'
 
 const { width } = useWindowSize()
 
 const gap = computed(() => {
-  if (width.value <= 880 && width.value > 700) return 8
+  if (width.value <= 920 && width.value > 700) return 8
   else if (width.value <= 700) return 6
   else return 16
 })
-
-const slides = [
-  {
-    imgUrl:
-      'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
-    title: 'Слушайте радио "На Шашлыки!" и еще 7 летних станций'
-  },
-  {
-    imgUrl:
-      'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
-    title: 'Слушайте радио "На Шашлыки!" и еще 7 летних станций'
-  },
-  {
-    imgUrl:
-      'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
-    title: 'Слушайте радио "На Шашлыки!" и еще 7 летних станций'
-  },
-  {
-    imgUrl:
-      'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
-    title: 'Слушайте радио "На Шашлыки!" и еще 7 летних станций'
-  },
-  {
-    imgUrl:
-      'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
-    title: 'Слушайте радио "На Шашлыки!" и еще 7 летних станций'
-  }
-]
 </script>
 
 <style lang="scss" scoped>
@@ -92,6 +67,7 @@ const slides = [
       background: rgb(229, 229, 229);
       background: linear-gradient(180deg, rgba(229, 229, 229, 1) 0%, rgba(37, 37, 37, 1) 100%);
       overflow: hidden;
+      cursor: pointer;
 
       @include respond(tab-port) {
         flex-basis: 28rem;

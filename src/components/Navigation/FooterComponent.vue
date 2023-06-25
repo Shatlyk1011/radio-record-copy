@@ -61,9 +61,9 @@
         </div>
 
         <div class="market">
-          <img src="./../assets/icons/google-play.svg" alt="play market " />
-          <img src="./../assets/icons/app-store.svg" alt="play market " />
-          <img src="./../assets/icons/app-gallery.svg" alt="play market " />
+          <img src="@/assets/icons/google-play.svg" alt="play market " />
+          <img src="@/assets/icons/app-store.svg" alt="play market " />
+          <img src="@/assets/icons/app-gallery.svg" alt="play market " />
         </div>
 
         <div class="mobile">
@@ -188,6 +188,7 @@
         margin-top: 2.4rem;
         gap: 1rem;
         img {
+          cursor: pointer;
         }
       }
 
@@ -218,7 +219,7 @@
     padding-top: 2.4rem;
     padding-bottom: 2.4rem;
 
-    @include respond(tab-land) {
+    @include respond(tab-port) {
       flex-direction: column;
       justify-content: center;
       align-items: center;
@@ -230,7 +231,7 @@
     .agreements {
       display: flex;
       gap: 3rem;
-      @include respond(tab-land) {
+      @include respond(tab-port) {
         flex-direction: column;
         justify-content: center;
         align-items: center;

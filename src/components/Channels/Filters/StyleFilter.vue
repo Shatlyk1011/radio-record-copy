@@ -63,7 +63,6 @@ import { type IGenre } from '@/assets/types'
 
 defineProps({
   genres: {
-    required: true,
     type: Array<IGenre>
   },
   showFilterPort: {
@@ -73,13 +72,12 @@ defineProps({
 })
 
 const route = useRoute()
+const showStyleFilter = ref(false)
 
 const selectedStyleName = computed(() => {
   if (route.params.style) return route.params.style.slice(14) as string
   else return null
 })
-
-const showStyleFilter = ref(false)
 </script>
 
 <style lang="scss">
@@ -144,6 +142,7 @@ const showStyleFilter = ref(false)
     ul {
       columns: 2;
       text-transform: capitalize;
+      user-select: none;
 
       @include respond(tab-port) {
         columns: auto;

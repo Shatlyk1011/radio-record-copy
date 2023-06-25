@@ -23,11 +23,15 @@
       ></path>
     </svg>
     <div class="svg-container">
-      <span v-html="stationNameCheck ? station.svg_fill : station.svg_outline"></span>
+      <span
+        v-if="!stationNameCheck || !isWaiting"
+        v-html="stationNameCheck ? station.svg_fill : station.svg_outline"
+      ></span>
       <LoadingComponent
         :class="['loading', compactVal ? 'loading--compact' : '']"
         v-if="stationNameCheck && isWaiting"
       />
+      <!-- v-if="stationNameCheck && isWaiting" -->
     </div>
 
     <div class="title">{{ station.title }}</div>
@@ -73,7 +77,6 @@ const stationNameCheck = computed(() => {
   flex-direction: column;
   align-items: center;
   height: 16rem;
-  position: relative;
   cursor: pointer;
   position: relative;
   padding: 0.8rem !important;
@@ -105,6 +108,7 @@ const stationNameCheck = computed(() => {
   &.item--compact {
     flex-direction: row;
     height: auto;
+    gap: 6px;
 
     .menu-icon {
       top: 50%;
@@ -192,17 +196,6 @@ const stationNameCheck = computed(() => {
 }
 
 .loading {
-  &::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background-color: $color-main;
-    border-radius: 8px;
-  }
-
   &--compact {
     font-size: 2.4rem;
   }

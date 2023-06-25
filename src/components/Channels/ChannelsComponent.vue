@@ -2,7 +2,7 @@
   <section class="section-channels padding-10-x">
     <ChannelFilters />
 
-    <div :class="['channels', compactVal ? 'channels--compact' : '']">
+    <div v-if="computedStations" :class="['channels', compactVal ? 'channels--compact' : '']">
       <ChannelItem
         :compactVal="compactVal"
         v-for="station in computedStations"
@@ -10,13 +10,16 @@
         :station="station"
       />
     </div>
+    <LoadingComponent v-else />
   </section>
 </template>
 
 <script setup lang="ts">
 import { computed, onMounted } from 'vue'
-import ChannelFilters from './Filters/ChannelFilters.vue'
-import ChannelItem from './ChannelItem.vue'
+import ChannelFilters from '@/components/Channels/Filters/ChannelFilters.vue'
+import ChannelItem from '@/components/Channels/ChannelItem.vue'
+import LoadingComponent from '@/components/shared/LoadingComponent.vue'
+
 import { useStorageCompact } from '@/store/store'
 
 import useStations from '@/composables/useStations'
@@ -70,6 +73,9 @@ onMounted(async () => await getApi())
       }
       @include respond(tab-port) {
         grid-template-columns: repeat(2, 1fr);
+      }
+      @include respond(smallest) {
+        grid-template-columns: 1fr;
       }
     }
   }

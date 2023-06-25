@@ -1,5 +1,5 @@
 <template>
-  <div :class="['auth', showSidebar ? 'bg' : '']">
+  <div :class="['auth', showSidebar ? 'show' : '']">
     <OnClickOutside class="wrap" @trigger="emitCloseSidebar">
       <component
         class="component"
@@ -54,8 +54,8 @@ const switchComponent = ref(false)
     }
   }
 
-  &.bg {
-    z-index: 997;
+  &.show {
+    z-index: 9999;
 
     opacity: 1;
     background-color: rgba($color-bg, 0.6);
