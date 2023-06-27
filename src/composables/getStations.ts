@@ -7,7 +7,7 @@ const genres = ref<IGenre[]>()
 
 const getApi = async () => {
   try {
-    const res = await fetch('https://www.radiorecord.ru/api/stations')
+    const res = await fetch('https://radio-record-copy-api.vercel.app')
     const data = await res.json()
     const { result } = data
     stations.value = result.stations

@@ -10,7 +10,7 @@ const isWaiting = ref(false)
 const autoplay = ref(false)
 
 const getPlaylist = async (id: number) => {
-  const response = await fetch('https://www.radiorecord.ru/api/stations/now/')
+  const response = await fetch('https://radio-record-copy-api.vercel.app/now')
 
   const data = await response.json()
   const { result } = data

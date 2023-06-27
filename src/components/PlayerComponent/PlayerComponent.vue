@@ -112,8 +112,13 @@
     <!-- COMPACT PLAYER -->
     <div class="player-compact" v-if="(width <= 920 && playing) || (width <= 920 && autoplay)">
       <div class="player-compact__info">
-        <button class="player-compact__btn" type="button" @click="playing = !playing">
-          <img :src="playlist?.track.image100" alt="playlist img" />
+        <button class="player-compact__btn" type="button">
+          <img v-if="playlist?.track.image100" :src="playlist?.track.image100" alt="playlist img" />
+          <img
+            v-else
+            src="https://www.radiorecord.ru/local/templates/record/assets/build/images/DefaultTrack_100.png"
+            alt="playlist img"
+          />
 
           <div class="wrap-abs">
             <svg
