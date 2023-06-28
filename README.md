@@ -24,7 +24,7 @@ live: [RadioRecordCopy](https://radio-record-copy.netlify.app)
 
 
 ### Проблема/решения:
-* Столкнулся с проблемой CORS при вызове [RadioRecordApi](https://www.radiorecord.ru/api/stations). Решением стало создание своего [сервера](https://radio-record-copy-api.vercel.app/) и запрос ресурсов через этот прокси. 
+* Столкнулся с проблемой CORS при вызове [RadioRecordApi](https://www.radiorecord.ru/api/stations). Решением стало создание своего [сервера](https://radio-record-copy-api.vercel.app/) и запрос ресурсов через прокси. 
 
 Скорость загрузки станций отличается (у меня медленнее загружает). С причиной я разобрался, и планирую в ближайшее время исправить. 
 
